@@ -1,7 +1,7 @@
 import React from "react";
 import AdminRoutes from "./utils/Routes/AdminRoutes";
 import MarketingRoutes from "./utils/Routes/MarketingRoutes";
-
+import "./style.scss";
 const App = () => {
   return (
     <>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./sidebar.scss";
 import logo from "../../assets/logo.png";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/auth";
 const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
   const dpath = useLocation().pathname;
 
@@ -11,6 +13,11 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
     if (dpath === path || dpath.split("/")[2] === path.split("/")[2]) {
       return true;
     }
+  };
+  const dispatch = useDispatch();
+  const clickHandler = (e) => {
+    e.preventDefault();
+    dispatch(logout());
   };
   return (
     <section id="sidebar">
@@ -47,7 +54,7 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
                 <div className={visible ? "dropdown" : "hide"}>
                   <ul>
                     <Link>Update Profile</Link>
-                    <button>Logout</button>
+                    <button onClick={clickHandler}>Logout</button>
                   </ul>
                 </div>
               </div>

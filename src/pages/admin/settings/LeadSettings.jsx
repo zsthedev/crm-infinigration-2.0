@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import swal from "sweetalert";
 import "./settings.scss";
 const LeadSettings = () => {
   const [status, setStatus] = useState("");

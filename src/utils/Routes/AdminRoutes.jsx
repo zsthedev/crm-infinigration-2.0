@@ -12,7 +12,8 @@ import AbroadQuestions from "../../pages/admin/settings/AbroadQuestions";
 import AddQuestions from "../../pages/admin/settings/AddQuestions";
 import Contracts from "../../pages/admin/contracts/Contracts";
 import AdminInvoices from "../../pages/admin/invoices/AdminInvoices";
-const AdminRoutes = () => {
+import { ProtectedRoute } from "protected-route-react";
+const AdminRoutes = ({ isAuthenticated, user }) => {
   const routes = [
     {
       value: "/admin/dashboard",
@@ -48,83 +49,143 @@ const AdminRoutes = () => {
       <Routes>
         <Route
           path="/admin/dashboard"
-          element={<Sidebar navLists={routes} component={AdminDashboard} />}
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} redirect="/">
+              <Sidebar navLists={routes} component={AdminDashboard} />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/admin/settings"
           element={
-            <Sidebar
-              navLists={routes}
-              component={Settings}
-              pageTitle="Settings"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={Settings}
+                pageTitle="Settings"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/settings/leads"
           element={
-            <Sidebar
-              navLists={routes}
-              component={LeadSettings}
-              pageTitle="Leads Settings"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={LeadSettings}
+                pageTitle="Leads Settings"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/settings/employees"
           element={
-            <Sidebar
-              navLists={routes}
-              component={EmployeeSettings}
-              pageTitle="Employee Settings"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={EmployeeSettings}
+                pageTitle="Employee Settings"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/leads"
           element={
-            <Sidebar
-              navLists={routes}
-              component={AdminLeads}
-              pageTitle="Leads"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={AdminLeads}
+                pageTitle="Leads"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/settings/abroad-questions"
           element={
-            <Sidebar
-              navLists={routes}
-              component={AbroadQuestions}
-              pageTitle="Abroad Questions"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={AbroadQuestions}
+                pageTitle="Abroad Questions"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/settings/abroad-questions/:id"
           element={
-            <Sidebar
-              navLists={routes}
-              component={AddQuestions}
-              pageTitle="Add Questions"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={AddQuestions}
+                pageTitle="Add Questions"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/leads/:id/activities"
           element={
-            <Sidebar
-              navLists={routes}
-              component={LeadActivities}
-              pageTitle="Lead Activities"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={LeadActivities}
+                pageTitle="Lead Activities"
+              />
+            </ProtectedRoute>
           }
         />
 
@@ -142,44 +203,76 @@ const AdminRoutes = () => {
         <Route
           path="/admin/invoices"
           element={
-            <Sidebar
-              navLists={routes}
-              component={AdminInvoices}
-              pageTitle="Invoices"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={Contracts}
+                pageTitle="Contracts"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/programs"
           element={
-            <Sidebar
-              navLists={routes}
-              component={AdminInvoices}
-              pageTitle="Programs"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={AddQuestions}
+                pageTitle="Programs"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/finances"
           element={
-            <Sidebar
-              navLists={routes}
-              component={AdminInvoices}
-              pageTitle="Finances"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={AddQuestions}
+                pageTitle="Finances"
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/admin/reports"
           element={
-            <Sidebar
-              navLists={routes}
-              component={AdminInvoices}
-              pageTitle="Reports"
-            />
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user && user.role === "admin"}
+              redirect="/"
+              redirectAdmin="/"
+            >
+              <Sidebar
+                navLists={routes}
+                component={AddQuestions}
+                pageTitle="Programs"
+              />
+            </ProtectedRoute>
           }
         />
       </Routes>

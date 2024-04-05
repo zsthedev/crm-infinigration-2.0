@@ -16,12 +16,21 @@
     position: sticky;
     top: 0;
     left: 0;
+    div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
 
+      a {
+        width: 100%;
+      }
+    }
     > a {
       transition: 0.2s ease-in;
     }
 
     a:hover {
+      width: 100%;
       background-color: $accent-color;
       padding: 8px;
       color: white;
@@ -29,6 +38,7 @@
     }
 
     .active {
+      width: 100%;
       background-color: $accent-color;
       padding: 8px;
       color: white;

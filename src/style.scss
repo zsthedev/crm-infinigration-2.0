@@ -87,12 +87,21 @@ table {
         color: $dark-color;
         padding: 10px;
 
-        a {
+        a,
+        button {
             padding: 4px 16px;
             background-color: $accent-color;
             color: white;
             font-size: 12px;
             border-radius: 4px;
+            border: none;
+            outline: none;
+        }
+    }
+
+    .span-td {
+        > span {
+            margin-left: 8px;
         }
     }
 }
@@ -122,4 +131,56 @@ table {
     display: flex;
     gap: 1vw;
     align-items: center;
+}
+
+.success,
+.pending,
+.fail {
+    background-color: rgba(0, 128, 0, 0.253);
+    padding: 4px 8px;
+    font-size: 10px;
+    border-radius: 2px;
+    color: green;
+}
+
+.pending {
+    background-color: rgba(255, 255, 0, 0.253);
+    color: rgb(110, 110, 0);
+}
+
+.fail {
+    background-color: rgba(220, 20, 60, 0.253);
+    color: crimson;
+}
+
+.sub-drop {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 90%;
+    transform: translateY("100%");
+    transition: 0.3s ease-in;
+    > a {
+        width: 100%;
+
+        margin-bottom: 10px;
+        transition: 0.2s ease-in;
+    }
+
+    a:hover {
+        width: 100%;
+        background-color: $accent-color;
+        padding: 8px;
+        color: white;
+        border-radius: 4px;
+    }
+
+    .active {
+        width: 100%;
+        background-color: $accent-color;
+        padding: 8px;
+        color: white;
+        border-radius: 4px;
+    }
 }

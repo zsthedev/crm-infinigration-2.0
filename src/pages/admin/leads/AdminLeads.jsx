@@ -62,6 +62,7 @@ const AdminLeads = () => {
             <td className="actions">
               <Link to={"123/activities"}>Activities</Link>
               <Link>Update Status</Link>
+              <button>Convert to Lead</button>
             </td>
           </tr>
         </tbody>

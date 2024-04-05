@@ -20,6 +20,10 @@ import AbroadQuestions from "./pages/admin/settings/AbroadQuestions";
 import AddQuestions from "./pages/admin/settings/AddQuestions";
 import LeadActivities from "./pages/admin/leads/LeadActivities";
 import Contracts from "./pages/admin/contracts/Contracts";
+import AdminInvoices from "./pages/admin/invoices/AdminInvoices";
+import Programs from "./pages/admin/programs/Programs";
+import AdminFinances from "./pages/admin/finances/AdminFinances";
+import Reports from "./pages/admin/reports/Reports";
 const App = () => {
   const routes = [
     {
@@ -43,7 +47,17 @@ const App = () => {
       label: "Programs",
       icon: { LuLayoutDashboard },
     },
-    { value: "/admin/finances", label: "Finance", icon: { LuLayoutDashboard } },
+    {
+      value: "/admin/finances",
+      label: "Finance",
+      icon: { LuLayoutDashboard },
+      subLinks: [
+        {
+          value: "/admin/finances/income",
+          label: "Income",
+        },
+      ],
+    },
     { value: "/admin/reports", label: "Reports", icon: { LuLayoutDashboard } },
     {
       value: "/admin/settings",
@@ -271,7 +285,7 @@ const App = () => {
               >
                 <Sidebar
                   navLists={routes}
-                  component={Contracts}
+                  component={AdminInvoices}
                   pageTitle="Invoices"
                 />
               </ProtectedRoute>
@@ -290,7 +304,7 @@ const App = () => {
               >
                 <Sidebar
                   navLists={routes}
-                  component={Contracts}
+                  component={Programs}
                   pageTitle="Programs"
                 />
               </ProtectedRoute>
@@ -309,7 +323,7 @@ const App = () => {
               >
                 <Sidebar
                   navLists={routes}
-                  component={Contracts}
+                  component={AdminFinances}
                   pageTitle="Finances"
                 />
               </ProtectedRoute>
@@ -328,7 +342,7 @@ const App = () => {
               >
                 <Sidebar
                   navLists={routes}
-                  component={Contracts}
+                  component={Reports}
                   pageTitle="Reports"
                 />
               </ProtectedRoute>

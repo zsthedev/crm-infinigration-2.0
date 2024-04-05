@@ -1,0 +1,35 @@
+@import "../../../style.scss";
+
+#admin-leads {
+    > .actions-row {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 25px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.164);
+        padding-bottom: 10px;
+
+        > div {
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+
+            > input {
+                width: 300px;
+                background-color: white;
+            }
+
+            a {
+                text-align: center;
+            }
+        }
+    }
+
+    table {
+        margin-top: 25px;
+
+        td {
+            height: 100%;
+        }
+    }
+}

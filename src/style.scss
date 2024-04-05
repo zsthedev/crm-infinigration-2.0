@@ -1,31 +1,125 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
-$accent-color: #4f4a9d;
-$light-accent-color: #837ce7;
-$grey-color: #f4f1f1;
-$dark-color: #1a0c19;
-$text-color: #787878;
-$light-accent-color: #b7bacd;
-
+$accent-color: #4364b7;
+$light-color: #f1f1f1;
+$dark-color: #363636;
+$text-color: #828282;
+$transparent-accent-color: #4364b72f;
+$red: #a71021;
 .section {
-  width: 100%;
+    width: 100%;
 }
-
+.logo {
+    width: 120px;
+}
 .row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 a {
-  text-decoration: none;
-  font-size: 1vw;
-  color: $text-color;
-  font-weight: 500;
+    text-decoration: none;
+    font-size: 14px;
+    color: $text-color;
+}
+label {
+    font-size: 12px;
+    font-weight: 500;
+    color: $dark-color;
+}
+input {
+    border: none;
+    outline: none;
+    background-color: $light-color;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.primary-btn {
+    min-width: 100px;
+    padding: 8px 16px;
+    font-size: 12px;
+    border: none;
+    outline: none;
+    color: white;
+
+    background-color: $accent-color;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+.hide {
+    display: none;
+}
+
+.heading {
+    font-weight: 600;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+
+    thead {
+        background-color: $dark-color;
+    }
+    tr {
+    }
+
+    th,
+    td {
+        padding: 8px;
+        border-radius: 4px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    td {
+        background-color: white;
+        color: $dark-color;
+        padding: 10px;
+
+        a {
+            padding: 4px 16px;
+            background-color: $accent-color;
+            color: white;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+    }
+}
+
+.delete {
+    padding: 4px 16px;
+    background-color: $accent-color;
+    color: white;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    background-color: crimson;
+    cursor: pointer;
+}
+
+.actions-row {
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    justify-content: flex-end;
+}
+.actions {
+    display: flex;
+    gap: 1vw;
+    align-items: center;
 }

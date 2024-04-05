@@ -3,13 +3,13 @@
 #sidebar {
   width: 100%;
   min-height: 100vh;
-  background-color: $grey-color;
+  background-color: $light-color;
 
   .nav {
     background-color: white;
     display: flex;
     flex-direction: column;
-    flex-basis: 18%;
+    flex-basis: 12%;
     min-height: 100vh;
     padding: 30px;
     gap: 1vw;
@@ -22,23 +22,30 @@
     }
 
     a:hover {
-      background: linear-gradient(90deg, $accent-color, $light-accent-color);
-      padding: 12px;
+      background-color: $accent-color;
+      padding: 8px;
       color: white;
       border-radius: 4px;
     }
 
     .active {
-      background: linear-gradient(90deg, $accent-color, $light-accent-color);
-      padding: 12px;
+      background-color: $accent-color;
+      padding: 8px;
       color: white;
       border-radius: 4px;
     }
   }
 
   .component-area {
-    flex-basis: 82%;
-    padding: 30px;
+    flex-basis: 88%;
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    .content {
+      width: 90%;
+    }
 
     .header {
       width: 100%;
@@ -47,11 +54,11 @@
       justify-content: space-between;
       align-items: center;
       background-color: white;
-      padding: 10px 20px;
+      padding: 5px 20px;
       border-radius: 8px;
 
       > p {
-        font-size: 1.2vw;
+        font-size: 1vw;
 
         > span {
           color: $accent-color;
@@ -60,6 +67,7 @@
       }
 
       > .icons {
+        position: relative;
         img {
           width: 50px;
           height: 50px;
@@ -67,6 +75,47 @@
           object-fit: cover;
           object-position: center;
           zoom: 1;
+          cursor: pointer;
+        }
+
+        .dropdown {
+          width: 220px;
+
+          position: absolute;
+          right: 0;
+          background-color: white;
+          padding: 14px;
+          border-radius: 4px;
+          border: 1px solid rgba(0, 0, 0, 0.089);
+          > ul {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5vw;
+
+            > button {
+              background-color: transparent;
+              border: none;
+              outline: none;
+              text-align: left;
+              font-size: 14px;
+              color: $text-color;
+              cursor: pointer;
+            }
+
+            a,
+            button {
+              transition: 0.2s ease-in-out;
+            }
+
+            a:hover,
+            button:hover {
+              background-color: $accent-color;
+              color: white;
+              padding: 7px;
+              border-radius: 4px;
+              color: $light-color;
+            }
+          }
         }
       }
     }

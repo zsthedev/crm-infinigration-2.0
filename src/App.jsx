@@ -24,6 +24,10 @@ import AdminInvoices from "./pages/admin/invoices/AdminInvoices";
 import Programs from "./pages/admin/programs/Programs";
 import AdminFinances from "./pages/admin/finances/AdminFinances";
 import Reports from "./pages/admin/reports/Reports";
+import FilteredLeads from "./pages/admin/leads/FilteredLeads";
+import AddLeads from "./pages/admin/leads/AddLeads";
+import CreateContract from "./pages/admin/contracts/CreateContract";
+import AddNewProgram from "./pages/admin/programs/AddNewProgram";
 const App = () => {
   const routes = [
     {
@@ -344,6 +348,82 @@ const App = () => {
                   navLists={routes}
                   component={Reports}
                   pageTitle="Reports"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/leads/filtered"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={FilteredLeads}
+                  pageTitle="Total Leads"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/leads/add"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={AddLeads}
+                  pageTitle="Create New Lead"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/contracts/add"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={CreateContract}
+                  pageTitle="Create New Contract"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/programs/add"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={AddNewProgram}
+                  pageTitle="Create New Program"
                 />
               </ProtectedRoute>
             }

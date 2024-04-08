@@ -1,9 +1,13 @@
 import React from "react";
 import Select from "react-select";
 import "./filterleads.scss";
-const FilterLeads = () => {
+const FilterLeads = ({ isOpen }) => {
   return (
-    <form action="" className="filter-leads">
+    <form
+      action=""
+      className="filter-leads"
+      style={{ display: isOpen ? "none" : "" }}
+    >
       <div className="inputs-row">
         <div>
           <label htmlFor="">Select Branch</label>

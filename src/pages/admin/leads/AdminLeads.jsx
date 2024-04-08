@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import FilterLeads from "../../../componets/filter leads/FilterLeads";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import "./admin-leads.scss";
 import Table from "../../../componets/table/Table";
 const AdminLeads = () => {
+  const [isOpen, setOpen] = useState(false);
+  const [isFOpen, setFOpen] = useState(false);
   return (
-    <section className="section" id="admin-leads">
+    <section className="sections" id="admin-leads">
       <FilterLeads />
-      <div className="actions-row">
+      <div className={"actions-row"}>
         <div>
           <Select
             placeholder="Total Leads"
@@ -30,9 +32,9 @@ const AdminLeads = () => {
         </div>
 
         <div>
-          <Link className="primary-btn">Forward Leads</Link>
-          <Link className="primary-btn">Add Lead</Link>
-          <Link className="primary-btn">Upload Leads</Link>
+          <Link className="primary-btn" to={"add"}>
+            Add Leads
+          </Link>
         </div>
       </div>
 
@@ -59,10 +61,23 @@ const AdminLeads = () => {
             <td>Nill</td>
             <td>Requirement Gathering</td>
             <td>Facebook</td>
-            <td className="actions">
-              <Link to={"123/activities"}>Activities</Link>
-              <Link>Update Status</Link>
-              <button>Convert to Lead</button>
+            <td className="act-row">
+              <div className="a-row">
+                <Link to={"123/activities"}>Activities</Link>
+                <button onClick={() => setOpen(!isOpen)}>Update Status</button>
+                <Link to={"/admin/contracts/add"}>Convert to Contract</Link>
+                <button onClick={() => setFOpen(!isFOpen)}>Forward Lead</button>
+              </div>
+
+              <form action="" style={{ display: isOpen ? "" : "none" }}>
+                <Select placeholder="Change Status" />
+                <button>Apply</button>
+              </form>
+
+              <form action="" style={{ display: isFOpen ? "" : "none" }}>
+                <Select placeholder="Forward Leads" />
+                <button>Apply</button>
+              </form>
             </td>
           </tr>
         </tbody>

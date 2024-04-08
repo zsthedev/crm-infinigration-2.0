@@ -1,8 +1,27 @@
-import React from "react";
-
+import React, { useState } from "react";
+import Select from "react-select";
+import "./invoices.scss";
+import CustomSelect from "../../../componets/CustomSelect/CustomSelect";
 const AdminInvoices = () => {
+  const [filter, setFilter] = useState();
+  const options = [
+    { value: "bank", label: "Bank" },
+    { value: "cash", label: "Cash" },
+  ];
+
+  const [open, isOpen] = useState(false);
   return (
     <section className="section" id="admin-invoices">
+      <div className="actions-row">
+        <CustomSelect
+          placeholder="Bank"
+          options={options}
+          defaultValue={filter}
+          value={filter}
+          onChange={setFilter}
+        />
+        <button className="primary-btn">Apply</button>
+      </div>
       <table>
         <thead>
           <tr>
@@ -38,10 +57,17 @@ const AdminInvoices = () => {
 
             <td>30,000</td>
             <td>70,000</td>
-            <td className="actions">
-              <button>View</button>
-              <button>Download</button>
-              <button>Send</button>
+            <td className="act-row">
+              <div className="a-row">
+                <button>View</button>
+                <button>Download</button>
+                <button onClick={() => isOpen(!open)}>Send</button>
+              </div>
+
+              <form action="" style={{ display: open ? "flex" : "none" }}>
+                <CustomSelect placeholder="Select Installement" color="" />
+                <button>Send</button>
+              </form>
             </td>
           </tr>
         </tbody>

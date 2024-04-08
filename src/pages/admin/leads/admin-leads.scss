@@ -1,6 +1,8 @@
 @import "../../../style.scss";
 
 #admin-leads {
+    position: relative;
+    min-height: 50vh;
     > .actions-row {
         display: flex;
         width: 100%;
@@ -31,5 +33,22 @@
         td {
             height: 100%;
         }
+    }
+
+    .add-lead {
+        width: 400px;
+
+        background-color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5vw;
+        padding: 20px;
+        border-radius: 8px;
     }
 }

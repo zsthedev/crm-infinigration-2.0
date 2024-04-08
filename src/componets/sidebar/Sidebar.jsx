@@ -20,50 +20,52 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
     dispatch(logout());
   };
   return (
-    <section id="sidebar">
-      <div className="row">
-        <div className="nav">
-          <img src={logo} className="logo" alt="" />
-          {navLists && navLists.length > 0
-            ? navLists.map((l) => (
-                <Link
-                  to={l.value}
-                  className={isActive(l.value) ? "active" : ""}
-                >
-                  {l.label}
-                </Link>
-              ))
-            : ""}
-        </div>
-        <div className="component-area">
-          <div className="content">
-            <div className="header">
-              {pageTitle === "" ? (
-                <p>
-                  Greeting! <span> Shahzaib</span>
-                </p>
-              ) : (
-                <p className="heading">{pageTitle}</p>
-              )}
-              <div className="icons">
-                <img
-                  src="https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.1700460183.1712188800&semt=sph"
-                  alt=""
-                  onClick={() => setVisible(!visible)}
-                />
-                <div className={visible ? "dropdown" : "hide"}>
-                  <ul>
-                    <Link>Update Profile</Link>
-                    <button onClick={clickHandler}>Logout</button>
-                  </ul>
+    <>
+      <section id="sidebar">
+        <div className="row">
+          <div className="nav">
+            <img src={logo} className="logo" alt="" />
+            {navLists && navLists.length > 0
+              ? navLists.map((l) => (
+                  <Link
+                    to={l.value}
+                    className={isActive(l.value) ? "active" : ""}
+                  >
+                    {l.label}
+                  </Link>
+                ))
+              : ""}
+          </div>
+          <div className="component-area">
+            <div className="content">
+              <div className="header">
+                {pageTitle === "" ? (
+                  <p>
+                    Greeting! <span> Shahzaib</span>
+                  </p>
+                ) : (
+                  <p className="heading">{pageTitle}</p>
+                )}
+                <div className="icons">
+                  <img
+                    src="https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.1700460183.1712188800&semt=sph"
+                    alt=""
+                    onClick={() => setVisible(!visible)}
+                  />
+                  <div className={visible ? "dropdown" : "hide"}>
+                    <ul>
+                      <Link>Update Profile</Link>
+                      <button onClick={clickHandler}>Logout</button>
+                    </ul>
+                  </div>
                 </div>
               </div>
+              <Component />
             </div>
-            <Component />
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

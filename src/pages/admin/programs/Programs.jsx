@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Programs = () => {
   return (
     <section className="section" id="programs">
       <div className="actions-row">
-        <button className="primary-btn">Add New</button>
+        <Link className="primary-btn" to={"/admin/programs/add"}>
+          Add New
+        </Link>
       </div>
       <table>
         <thead>

@@ -1,0 +1,74 @@
+import { createReducer } from "@reduxjs/toolkit";
+
+export const leadsReducer = createReducer(
+  {},
+  {
+    createLeadRequest: (state) => {
+      state.loading = true;
+    },
+    createLeadSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    createLeadFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    allLeadsRequest: (state) => {
+      state.loading = true;
+    },
+    allLeadsSuccess: (state, action) => {
+      state.leads = action.payload;
+      state.loading = false;
+    },
+    allLeadsFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    updateLeadStatusRequest: (state) => {
+      state.loading = true;
+    },
+    updateLeadStatusSuccess: (state, action) => {
+      state.loading = false;
+      state.leads = action.payload;
+      state.message = action.payload.message;
+    },
+    updateLeadStatusFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    getTasksSummaryRequest: (state) => {
+      state.loading = true;
+    },
+    getTasksSummarySuccess: (state, action) => {
+      state.loading = false;
+      state.tasks = action.payload;
+    },
+    getTasksSummaryFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    addFollowUpDateRequest: (state) => {
+      state.loading = true;
+    },
+    addFollowUpDateSuccess: (state, action) => {
+      state.loading = false;
+      state.tasks = action.payload;
+    },
+    addFollowUpDateFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    clearError: (state, action) => {
+      state.error = null;
+    },
+    clearMessage: (state, action) => {
+      state.message = null;
+    },
+  }
+);

@@ -3,11 +3,60 @@ import FilterLeads from "../../../componets/filter leads/FilterLeads";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import "./admin-leads.scss";
-import Table from "../../../componets/table/Table";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllLeads, updateLeadStatus } from "../../../redux/actions/leads";
+import Loader from "../../loader/Loader";
+import toast from "react-hot-toast";
+
 const AdminLeads = () => {
   const [isOpen, setOpen] = useState(false);
   const [isFOpen, setFOpen] = useState(false);
-  return (
+
+  const dispatch = useDispatch();
+
+  const [status, setStatus] = useState("");
+
+  const statusOptions = [
+    {
+      value: "requirements",
+      label: "Requirements Gathering",
+    },
+
+    {
+      value: "documents",
+      label: "Documents Verification",
+    },
+  ];
+
+  const updateStatusHandler = (e) => {
+    e.preventDefault();
+    const id = e.target.id;
+    dispatch(updateLeadStatus(id, status.value));
+  };
+
+  const { loading, error, message, leads } = useSelector(
+    (state) => state.leads
+  );
+  useEffect(() => {
+    dispatch(getAllLeads());
+  }, []);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: "clearError" });
+    }
+
+    if (message) {
+      toast.success(message);
+      dispatch({ type: "clearMessage" });
+    }
+  }, [error, message, loading]);
+
+  return loading || !leads || !leads.leads ? (
+    <Loader />
+  ) : (
     <section className="sections" id="admin-leads">
       <FilterLeads />
       <div className={"actions-row"}>
@@ -53,33 +102,54 @@ const AdminLeads = () => {
         </thead>
 
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>Shahzaib Khan</td>
-            <td>USA</td>
-            <td>2-April-2024</td>
-            <td>Nill</td>
-            <td>Requirement Gathering</td>
-            <td>Facebook</td>
-            <td className="act-row">
-              <div className="a-row">
-                <Link to={"123/activities"}>Activities</Link>
-                <button onClick={() => setOpen(!isOpen)}>Update Status</button>
-                <Link to={"/admin/contracts/add"}>Convert to Contract</Link>
-                <button onClick={() => setFOpen(!isFOpen)}>Forward Lead</button>
-              </div>
+          {leads.leads && leads.leads.length > 0
+            ? leads.leads.map((l, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{l.client.name}</td>
+                  <td>{l.client.program}</td>
+                  <td>{l.createdAt.split("T")[0]}</td>
+                  <td>Nill</td>
+                  <td>{l.status}</td>
+                  <td>{l.source}</td>
+                  <td className="act-row">
+                    <div className="a-row">
+                      <Link to={`${l._id}/activities`}>Activities</Link>
+                      <button onClick={() => setOpen(!isOpen)}>
+                        Update Status
+                      </button>
+                      <Link to={"/admin/contracts/add"}>
+                        Convert to Contract
+                      </Link>
+                      <button onClick={() => setFOpen(!isFOpen)}>
+                        Forward Lead
+                      </button>
+                    </div>
 
-              <form action="" style={{ display: isOpen ? "" : "none" }}>
-                <Select placeholder="Change Status" />
-                <button>Apply</button>
-              </form>
+                    <form
+                      action=""
+                      style={{ display: isOpen ? "" : "none" }}
+                      onSubmit={updateStatusHandler}
+                      id={l._id}
+                    >
+                      <Select
+                        placeholder="Change Status"
+                        value={status}
+                        onChange={setStatus}
+                        options={statusOptions}
+                        defaultValue={status}
+                      />
+                      <button>Apply</button>
+                    </form>
 
-              <form action="" style={{ display: isFOpen ? "" : "none" }}>
-                <Select placeholder="Forward Leads" />
-                <button>Apply</button>
-              </form>
-            </td>
-          </tr>
+                    <form action="" style={{ display: isFOpen ? "" : "none" }}>
+                      <Select placeholder="Forward Leads" />
+                      <button>Apply</button>
+                    </form>
+                  </td>
+                </tr>
+              ))
+            : ""}
         </tbody>
       </table>
     </section>

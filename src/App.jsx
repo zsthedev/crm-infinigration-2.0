@@ -28,6 +28,9 @@ import FilteredLeads from "./pages/admin/leads/FilteredLeads";
 import AddLeads from "./pages/admin/leads/AddLeads";
 import CreateContract from "./pages/admin/contracts/CreateContract";
 import AddNewProgram from "./pages/admin/programs/AddNewProgram";
+import AddNewEmployee from "./pages/admin/settings/employees/AddNewEmployee";
+import ChangePassword from "./pages/admin/settings/employees/ChangePassword";
+import EmployeeProfile from "./pages/admin/settings/employees/EmployeeProfile";
 const App = () => {
   const routes = [
     {
@@ -185,6 +188,63 @@ const App = () => {
                   navLists={routes}
                   component={EmployeeSettings}
                   pageTitle="Employee Settings"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/settings/employees/add"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={AddNewEmployee}
+                  pageTitle="Add New Employee"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/settings/employees/:id/changepassword"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={ChangePassword}
+                  pageTitle="Change Password"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/settings/employees/:id/profile"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={EmployeeProfile}
+                  pageTitle="Profile Settings"
                 />
               </ProtectedRoute>
             }

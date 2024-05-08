@@ -41,19 +41,19 @@ const EmployeeProfile = () => {
           <input
             type="text"
             placeholder="Name"
-            value={employee.employee.name || ""}
+            value={(employee && employee.employee.name) || ""}
             onChange={(e) => setName(e.target.value)}
           />
           <input
             type="text"
             placeholder="Email"
-            value={employee.employee.email || ""}
+            value={(employee && employee.employee.email) || ""}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="text"
             placeholder="Role"
-            value={employee.employee.role || ""}
+            value={(employee && employee.employee.role) || ""}
             onChange={(e) => setRole(e.target.value)}
             readOnly
           />

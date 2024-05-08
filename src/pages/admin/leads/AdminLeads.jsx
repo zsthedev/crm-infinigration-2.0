@@ -8,10 +8,13 @@ import { useEffect } from "react";
 import { getAllLeads, updateLeadStatus } from "../../../redux/actions/leads";
 import Loader from "../../loader/Loader";
 import toast from "react-hot-toast";
+import { getEmployees } from "../../../redux/actions/admin";
 
 const AdminLeads = () => {
   const [isOpen, setOpen] = useState(false);
   const [isFOpen, setFOpen] = useState(false);
+
+  const [forward, setForward] = useState("");
 
   const dispatch = useDispatch();
 
@@ -28,6 +31,18 @@ const AdminLeads = () => {
       label: "Documents Verification",
     },
   ];
+  useEffect(() => {
+    getEmployees();
+  }, []);
+  const { employees } = useSelector((state) => state.admin);
+  const forwardLeadOptions =
+    employees &&
+    employees.employees.map((e) => ({
+      value: e._id,
+      label: `${e.name} (${e.role})`,
+    }));
+
+  console.log(forwardLeadOptions);
 
   const updateStatusHandler = (e) => {
     e.preventDefault();
@@ -54,8 +69,12 @@ const AdminLeads = () => {
     }
   }, [error, message, loading]);
 
+  const forwardLeadHandler = (e) => {
+    e.preventDefault();
+  };
+
   return loading || !leads || !leads.leads ? (
-    <Loader />
+    <Loader /> || !employees
   ) : (
     <section className="sections" id="admin-leads">
       <FilterLeads />
@@ -143,7 +162,12 @@ const AdminLeads = () => {
                     </form>
 
                     <form action="" style={{ display: isFOpen ? "" : "none" }}>
-                      <Select placeholder="Forward Leads" />
+                      <Select
+                        placeholder="Forward Leads"
+                        options={forwardLeadOptions}
+                        defaultValue={forward}
+                        onChange={setForward}
+                      />
                       <button>Apply</button>
                     </form>
                   </td>

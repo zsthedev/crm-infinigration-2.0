@@ -64,6 +64,18 @@ export const leadsReducer = createReducer(
       state.error = action.payload;
     },
 
+    forwardLeadRequest: (state) => {
+      state.loading = true;
+    },
+    forwardLeadSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    forwardLeadFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     clearError: (state, action) => {
       state.error = null;
     },

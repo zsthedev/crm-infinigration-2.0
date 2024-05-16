@@ -31,6 +31,7 @@ import AddNewProgram from "./pages/admin/programs/AddNewProgram";
 import AddNewEmployee from "./pages/admin/settings/employees/AddNewEmployee";
 import ChangePassword from "./pages/admin/settings/employees/ChangePassword";
 import EmployeeProfile from "./pages/admin/settings/employees/EmployeeProfile";
+import ProgramDetails from "./pages/admin/programs/ProgramDetails";
 const App = () => {
   const routes = [
     {
@@ -369,6 +370,25 @@ const App = () => {
                 <Sidebar
                   navLists={routes}
                   component={Programs}
+                  pageTitle="Programs"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/program/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={ProgramDetails}
                   pageTitle="Programs"
                 />
               </ProtectedRoute>

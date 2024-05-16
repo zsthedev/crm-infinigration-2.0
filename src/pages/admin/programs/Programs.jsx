@@ -1,8 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { lazy, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { getAllPrograms } from "../../../redux/actions/program";
+import Loader from "../../loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
 const Programs = () => {
-  return (
+  const { loading, error, message, programs } = useSelector(
+    (state) => state.program
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllPrograms());
+  }, [error, message]);
+
+  const navigate = useNavigate()
+  return loading ? (
+    <Loader />
+  ) : (
     <section className="section" id="programs">
       <div className="actions-row">
         <Link className="primary-btn" to={"/admin/programs/add"}>
@@ -13,8 +26,8 @@ const Programs = () => {
         <thead>
           <tr>
             <th>Sr</th>
-            <th>Name</th>
-            <th>Price</th>
+            <th>Country</th>
+            <th>Total Cost</th>
             <th>Status</th>
             <th>Estimated Time</th>
             <th>Actions</th>
@@ -22,18 +35,26 @@ const Programs = () => {
         </thead>
 
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>Austrailian Immigration</td>
-            <td>150,000 PKR</td>
-            <td>Active</td>
-            <td>6 Months</td>
-            <td className="actions">
-              <button>View</button>
-              <button>Disable</button>
-              <button>Update</button>
-            </td>
-          </tr>
+          {programs && programs.length > 0
+            ? programs.map((p, index) => (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{p.generalInformation[0].country}</td>
+                  <td>{p.generalInformation[0].totalCost} Lacs</td>
+                  <td>{p.status}</td>
+                  <td>{p.generalInformation[0].processDuration} Months</td>
+                  <td className="actions">
+                    <button
+                      onClick={() => navigate(`/admin/program/${p._id}`)}
+                    >
+                      View
+                    </button>
+                    <button>Disable</button>
+                    <button>Update</button>
+                  </td>
+                </tr>
+              ))
+            : ""}
         </tbody>
       </table>
     </section>

@@ -32,6 +32,11 @@ import AddNewEmployee from "./pages/admin/settings/employees/AddNewEmployee";
 import ChangePassword from "./pages/admin/settings/employees/ChangePassword";
 import EmployeeProfile from "./pages/admin/settings/employees/EmployeeProfile";
 import ProgramDetails from "./pages/admin/programs/ProgramDetails";
+import PaymentsReceived from "./pages/admin/finances/PaymentsReceived";
+import CreditNotes from "./pages/admin/finances/CreditNotes";
+import PaymentsMade from "./pages/admin/finances/PaymentsMade";
+import Bills from "./pages/admin/finances/Bills";
+import Expense from "./pages/admin/finances/Expense";
 const App = () => {
   const routes = [
     {
@@ -61,8 +66,33 @@ const App = () => {
       icon: { LuLayoutDashboard },
       subLinks: [
         {
-          value: "/admin/finances/income",
-          label: "Income",
+          value: "/admin/finances/payments-received",
+          label: "Payments Received",
+        },
+
+        {
+          value: "/admin/finances/credit-notes",
+          label: "Credit Notes",
+        },
+
+        {
+          value: "/admin/finances/expense",
+          label: "Expenses",
+        },
+
+        {
+          value: "/admin/finances/bills",
+          label: "Bills",
+        },
+
+        {
+          value: "/admin/finances/payments-made",
+          label: "Payments Made",
+        },
+
+        {
+          value: "/admin/finances/vendor-credits",
+          label: "Vendor Credits",
         },
       ],
     },
@@ -409,6 +439,120 @@ const App = () => {
                   navLists={routes}
                   component={AdminFinances}
                   pageTitle="Finances"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/payments-received"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={PaymentsReceived}
+                  pageTitle="Payments Received"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/credit-notes"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={CreditNotes}
+                  pageTitle="Credit Notes"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/expense"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={Expense}
+                  pageTitle="Expenses"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/bills"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={Bills}
+                  pageTitle="Bills"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/payments-made"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={PaymentsMade}
+                  pageTitle="Payments Made"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/vendor-credits"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={CreditNotes}
+                  pageTitle="Vendor Credits"
                 />
               </ProtectedRoute>
             }

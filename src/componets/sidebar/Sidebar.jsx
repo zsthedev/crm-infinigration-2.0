@@ -4,21 +4,33 @@ import "./sidebar.scss";
 import logo from "../../assets/logo.png";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/auth";
+
 const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
   const dpath = useLocation().pathname;
-
   const [visible, setVisible] = useState(false);
-  console.log();
+  const [subLinksVisible, setSubLinksVisible] = useState({});
+
   const isActive = (path) => {
     if (dpath === path || dpath.split("/")[2] === path.split("/")[2]) {
       return true;
     }
+    return false;
   };
+
   const dispatch = useDispatch();
+
   const clickHandler = (e) => {
     e.preventDefault();
     dispatch(logout());
   };
+
+  const toggleSubLinks = (index) => {
+    setSubLinksVisible((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
   return (
     <>
       <section id="sidebar">
@@ -26,13 +38,25 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
           <div className="nav">
             <img src={logo} className="logo" alt="" />
             {navLists && navLists.length > 0
-              ? navLists.map((l) => (
-                  <Link
-                    to={l.value}
-                    className={isActive(l.value) ? "active" : ""}
-                  >
-                    {l.label}
-                  </Link>
+              ? navLists.map((l, index) => (
+                  <div className="link-container" key={index}>
+                    <Link
+                      to={l.value}
+                      className={isActive(l.value) ? "active" : ""}
+                      onClick={() => toggleSubLinks(index)}
+                    >
+                      {l.label}
+                    </Link>
+                    <ul className={subLinksVisible[index] ? "visible" : "hidden"}>
+                      {l.subLinks && l.subLinks.length > 0
+                        ? l.subLinks.map((sl, subIndex) => (
+                            <li key={subIndex}>
+                              <Link to={sl.value}>{sl.label}</Link>
+                            </li>
+                          ))
+                        : ""}
+                    </ul>
+                  </div>
                 ))
               : ""}
           </div>
@@ -54,7 +78,7 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
                   />
                   <div className={visible ? "dropdown" : "hide"}>
                     <ul>
-                      <Link>Update Profile</Link>
+                      <Link to="/update-profile">Update Profile</Link>
                       <button onClick={clickHandler}>Logout</button>
                     </ul>
                   </div>

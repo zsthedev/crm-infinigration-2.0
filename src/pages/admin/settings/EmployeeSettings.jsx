@@ -26,7 +26,7 @@ const EmployeeSettings = () => {
             <th>Sr</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Role</th>
+            <th>Department</th>
             <th>Actions</th>
             <th>Links</th>
             <th>Status</th>
@@ -38,9 +38,9 @@ const EmployeeSettings = () => {
             ? employees.employees.map((e, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{e.name}</td>
-                  <td>{e.email}</td>
-                  <td>{e.role}</td>
+                  <td>{e.bioData.name}</td>
+                  <td>{e.bioData.email}</td>
+                  <td>{e.job.department}</td>
                   <td className="actions">
                     <Link
                       to={`/admin/settings/employees/${e._id}/changepassword`}

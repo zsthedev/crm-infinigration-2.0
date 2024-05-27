@@ -19,7 +19,7 @@ const AdminLeads = () => {
   const dispatch = useDispatch();
 
   const [status, setStatus] = useState("");
-
+ 
   const statusOptions = [
     {
       value: "requirements",
@@ -35,11 +35,12 @@ const AdminLeads = () => {
     getEmployees();
   }, []);
   const { employees } = useSelector((state) => state.admin);
+  
   const forwardLeadOptions =
     employees &&
     employees.employees.map((e) => ({
       value: e._id,
-      label: `${e.name} (${e.role})`,
+      label: `${e.bioData.name} (${e.job.department})`,
     }));
 
   console.log(forwardLeadOptions);
@@ -68,6 +69,10 @@ const AdminLeads = () => {
       dispatch({ type: "clearMessage" });
     }
   }, [error, message, loading]);
+
+  useEffect(() => {
+    dispatch(getEmployees());
+  }, []);
 
   const forwardLeadHandler = (e) => {
     e.preventDefault();

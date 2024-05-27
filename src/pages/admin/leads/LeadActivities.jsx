@@ -5,15 +5,16 @@ import "./lead-activities.scss";
 import TaskSummary from "../../../componets/task summary/TaskSummary";
 import Profiling from "../../../componets/profiling/Profiling";
 import Documents from "../../../componets/documents/Documents";
-import { getTaskSummary } from "../../../redux/actions/leads";
+import { getLeadDetails, getTaskSummary } from "../../../redux/actions/leads";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Loader from "../../loader/Loader";
 const LeadActivities = () => {
   const dispatch = useDispatch();
 
   const params = useParams();
   const id = params.id;
-  const { leads } = useSelector((state) => state.leads);
+  const { loading, leads, details } = useSelector((state) => state.leads);
 
   let tasks = leads && leads.leads.find((l) => l._id.toString() === id);
 
@@ -26,10 +27,16 @@ const LeadActivities = () => {
     { value: "documents", label: "Documents" },
   ];
 
+  useEffect(() => {
+    dispatch(getLeadDetails(id));
+  }, []);
+
   console.log(activity);
-  return (
+  return loading || !details || !leads ? (
+    <Loader />
+  ) : (
     <section className="section" id="lead-activities">
-      <ClientProfile />
+      <ClientProfile client={details.client} />
       <div className="selector">
         <Select
           placeholder={"Task Summary"}
@@ -46,7 +53,7 @@ const LeadActivities = () => {
         ""
       )}
       {activity.value === "profile" ? <Profiling /> : ""}
-      {activity.value === "documents" ? <Documents /> : ""}
+      {activity.value === "documents" ? <Documents programs={details.client.program}/> : ""}
     </section>
   );
 };

@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../loader/Loader";
 import Select from "react-select";
+import { getAllPrograms } from "../../../redux/actions/program";
 
 const AddLeads = () => {
   const [clientName, setClientName] = useState("");
@@ -21,10 +22,7 @@ const AddLeads = () => {
   const { loading, error, message } = useSelector((state) => state.leads);
   const navigate = useNavigate();
 
-  const programOptions = [
-    { value: "usa", label: "USA" },
-    { value: "canada", label: "Canada" },
-  ];
+  const { programs } = useSelector((state) => state.program);
 
   const sourceOptions = [
     { value: "facebook", label: "Facebook" },
@@ -63,6 +61,15 @@ const AddLeads = () => {
   const onDrop = useCallback((acceptedFiles) => {
     console.log(acceptedFiles);
   }, []);
+
+  useEffect(() => {
+    dispatch(getAllPrograms());
+  }, []);
+
+  const programOptions = programs.map((p) => ({
+    value: p._id,
+    label: p.generalInformation[0].country,
+  }));
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return loading ? (

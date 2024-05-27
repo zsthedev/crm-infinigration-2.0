@@ -1,24 +1,61 @@
 import axios from "axios";
 import { server } from "../store.js";
 
-export const createUser = (name, email, password, role) => async (dispatch) => {
-  dispatch({ type: "createUserRequest" });
+export const createUser =
+  (
+    name,
+    fatherName,
+    cnic,
+    mobile,
+    email,
+    gender,
+    dob,
+    maritalStatus,
+    relegion,
+    nationality,
+    title,
+    department,
+    salary,
+    role,
+    password
+  ) =>
+  async (dispatch) => {
+    dispatch({ type: "createUserRequest" });
 
-  try {
-    const { data } = await axios.post(
-      `${server}/createuser`,
-      { name, email, password, role },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
+    try {
+      const { data } = await axios.post(
+        `${server}/createuser`,
+        {
+          name,
+          fatherName,
+          cnic,
+          mobile,
+          email,
+          gender,
+          dob,
+          maritalStatus,
+          relegion,
+          nationality,
+          title,
+          department,
+          salary,
+          role,
+          password
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-    dispatch({ type: "createUserSuccess", payload: data });
-  } catch (error) {
-    dispatch({ type: "createUserFail", payload: error.response.data.message });
-  }
-};
+      dispatch({ type: "createUserSuccess", payload: data });
+    } catch (error) {
+      dispatch({
+        type: "createUserFail",
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const changePassword =
   (id, oldPassword, newPassword) => async (dispatch) => {

@@ -37,34 +37,69 @@ const EmployeeProfile = () => {
           </span>
           <button className="primary-btn">Upload Profile Picture</button>
         </div>
-        <form action="">
-          <input
-            type="text"
-            placeholder="Name"
-            value={(employee && employee.employee.name) || ""}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Email"
-            value={(employee && employee.employee.email) || ""}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Role"
-            value={(employee && employee.employee.role) || ""}
-            onChange={(e) => setRole(e.target.value)}
-            readOnly
-          />
-          <button className="primary-btn">Update Profile</button>
-        </form>
+
+        <div className="stats-container">
+          <AdminData description={"Leads Assigned"} number={0} />
+          <AdminData description={"Conversion"} number={0} />
+          <AdminData description={"Success Ration"} number={0} />
+        </div>
       </div>
 
-      <div className="stats-container">
-        <AdminData description={"Leads Assigned"} number={0} />
-        <AdminData description={"Conversion"} number={0} />
-        <AdminData description={"Success Ration"} number={0} />
+      <div className="details-container">
+        <h2 className="heading">Bio Data</h2>
+        <p>
+          Name <span>{employee.employee.bioData.name}</span>
+        </p>
+
+        <p>
+          Father Name <span>{employee.employee.bioData.fatherName}</span>
+        </p>
+
+        <p>
+          CNIC <span>{employee.employee.bioData.cnic}</span>
+        </p>
+        <p>
+          Mobile No <span>{employee.employee.bioData.mobile}</span>
+        </p>
+
+        <p>
+          Email <span>{employee.employee.bioData.email}</span>
+        </p>
+
+        <p>
+          Gender <span>{employee.employee.bioData.gender}</span>
+        </p>
+
+        <p>
+          Date of Birth <span>{employee.employee.bioData.dob.split("T")[0]}</span>
+        </p>
+
+        <p>
+          Marital Status <span>{employee.employee.bioData.maritalStatus}</span>
+        </p>
+
+        <p>
+          Relegion <span>{employee.employee.bioData.relegion}</span>
+        </p>
+
+        <p>
+          Nationality <span>{employee.employee.bioData.nationality}</span>
+        </p>
+
+
+        <h2 className="heading">Job</h2>
+
+        <p>
+          Nationality <span>{employee.employee.job.title}</span>
+        </p>
+
+        <p>
+          Department <span>{employee.employee.job.department}</span>
+        </p>
+
+        <p>
+          Salary <span>{employee.employee.job.salary} PKR</span>
+        </p>
       </div>
     </section>
   );

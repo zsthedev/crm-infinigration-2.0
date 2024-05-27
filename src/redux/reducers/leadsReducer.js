@@ -15,6 +15,18 @@ export const leadsReducer = createReducer(
       state.error = action.payload;
     },
 
+    getLeadDetailsRequest: (state) => {
+      state.loading = true;
+    },
+    getLeadDetailsSuccess: (state, action) => {
+      state.loading = false;
+      state.details = action.payload;
+    },
+    getLeadDetailsFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     allLeadsRequest: (state) => {
       state.loading = true;
     },

@@ -37,6 +37,7 @@ import CreditNotes from "./pages/admin/finances/CreditNotes";
 import PaymentsMade from "./pages/admin/finances/PaymentsMade";
 import Bills from "./pages/admin/finances/Bills";
 import Expense from "./pages/admin/finances/Expense";
+import ViewContract from "./pages/admin/contracts/ViewContract";
 const App = () => {
   const routes = [
     {
@@ -629,6 +630,44 @@ const App = () => {
                   navLists={routes}
                   component={CreateContract}
                   pageTitle="Create New Contract"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/contracts/add/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={CreateContract}
+                  pageTitle="Create New Contract"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/contract/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={ViewContract}
+                  pageTitle="View Contract"
                 />
               </ProtectedRoute>
             }

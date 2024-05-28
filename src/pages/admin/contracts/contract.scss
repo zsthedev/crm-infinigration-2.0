@@ -12,3 +12,99 @@
         }
     }
 }
+
+#create-contract {
+    form {
+        background-color: white;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-radius: 8px;
+        justify-content: center;
+
+        input {
+            width: 100%;
+        }
+
+        .installements-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            button {
+                width: 150px;
+            }
+        }
+        .installment {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.199);
+            padding-bottom: 20px;
+
+            textarea {
+                background-color: $light-color;
+                border: none;
+                outline: none;
+                padding: 10px;
+                border-radius: 4px;
+                height: 100px;
+            }
+        }
+    }
+}
+
+#view-contract {
+    .pdf-file {
+        width: 100%;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+
+        .logo-row {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            img {
+                width: 120px;
+            }
+
+            h2 {
+                font-size: 1.5vw;
+            }
+        }
+
+        h2 {
+            font-size: 1.6vw;
+            text-align: center;
+        }
+
+        table {
+            margin: 20px auto;
+
+            tr {
+                td {
+                    background-color: $light-color;
+                }
+            }
+        }
+        .small {
+            font-size: 1vw;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .duties {
+         margin-bottom: 15px;
+            h2 {
+                text-align: left;
+                text-decoration: underline;
+            }
+        }
+    }
+}

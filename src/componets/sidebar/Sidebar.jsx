@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./sidebar.scss";
 import logo from "../../assets/logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/auth";
 
 const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
@@ -23,6 +23,10 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
     e.preventDefault();
     dispatch(logout());
   };
+
+
+  const {auth, isAuthenticated} = useSelector(state => state.user)
+
 
   const toggleSubLinks = (index) => {
     setSubLinksVisible((prev) => ({
@@ -65,7 +69,7 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
               <div className="header">
                 {pageTitle === "" ? (
                   <p>
-                    Greeting! <span> Shahzaib</span>
+                    Greeting! <span> {isAuthenticated && auth.user.bioData.name}</span>
                   </p>
                 ) : (
                   <p className="heading">{pageTitle}</p>

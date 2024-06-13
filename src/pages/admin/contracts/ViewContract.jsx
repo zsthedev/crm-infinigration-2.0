@@ -272,6 +272,130 @@ const ViewContract = () => {
             </tbody>
           </table>
         </div>
+
+        <div className="duties">
+          <h2 className="heading small">
+            {contract.program.generalInformation[0].country.toUpperCase()}{" "}
+            Government Fee:
+          </h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Installment No.</th>
+                <th>Installment Stage</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Appointment Fee</td>
+                <td>Payable by Client Directly</td>
+              </tr>
+
+              <tr>
+                <td>2</td>
+                <td>Visa Fee– Each Member</td>
+                <td>Payable by Client Directly</td>
+              </tr>
+
+              <tr>
+                <td>3</td>
+                <td>
+                  {contract.program.generalInformation[0].country.toUpperCase()}{" "}
+                  Double Legalization Fee
+                </td>
+                <td>Payable by Client Directly</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            <b>NOTE:</b> For Receiving of Infinigration Consulting Charges and
+            giving refund to client in currency other than Euro say PKR;
+            www.xe.com will be followed for using exchange rates. Exchange rate
+            of the day of transaction will be followed.
+          </p>
+        </div>
+
+        <div className="duties">
+          <h2 className="heading small">Refund Policies</h2>
+
+          <ol>
+            <li>
+              Fee paid for visa to relevant Lithuania Departments, are not
+              refundable in any circumstance
+            </li>
+            <li>Double Legalization fee paid is non-refundable.</li>
+            <li>
+              No refund is given if the client withdraws his/her case at any
+              stage, not adheres to the clauses of this contract or not fulfils
+              his duties.
+            </li>
+            <li>
+              From the first installment, Non-refundable PKR 500,000/-in case of
+              rejection of Visa.
+            </li>
+            <li>
+              No refund is given in case of refusal of Visa or Certificate of
+              sponsorship resulting from deception by the CLIENT e.g.,
+              submission of fake, forged, altered, wrongly procured documents
+              etc. submitted by the client in support of his application. In
+              scenario like this, all amount previously paid as consultancy
+              charges to Infinigration Consulting and processing fee to
+              Lithuania Authorities will be forfeited.
+            </li>
+            <li>
+              No refund of first instalment is given in case of refusal or
+              deferral of Visa, resulting from change in applicable
+              immigration/work-permit policies. (If client tends to withdraw the
+              case)
+            </li>
+            <li>
+              All refund requests, and notifications of withdrawal by the CLIENT
+              must be made in writing to the Consultant. Approved refunds will
+              be paid within 8 weeks of written request made by CLIENT.
+            </li>
+
+            <li>
+              For refund, the exchange rates on deposit and refund date will be
+              compared according to www.xe.com. The lowest will be paid. Any
+              payments against exchange rate difference for transfer, admin
+              charges upon instalment and late fee penalty/surcharge will not be
+              refunded
+            </li>
+          </ol>
+        </div>
+
+        <div className="duties">
+          <h2 className="heading small">Consent</h2>
+          <p>
+            Both the parties have properly read and understood the contents of
+            the agreement and append he respective signatures of their free will
+            and without any misrepresentation, coercion, and undue influence of
+            any part of either party. Client acknowledges that he/she have read
+            and understood this Agreement, have sought translation if required,
+            have obtained such independent legal advice as deem appropriate, and
+            agree to be bound by its terms. Client has been told, recognizes,
+            and understands that the Company has made no “Guarantee “promising
+            the success or outcome of his/her application.
+          </p>
+
+          <div className="signature-row">
+            <div className="sign">
+              <h3>Client Signature</h3>
+
+              <p>Name: {contract.lead.client.name}</p>
+            </div>
+            <div className="sign">
+              <h3>Authorized Signatory</h3>
+
+              <p>Name: Kashif Iqbal</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

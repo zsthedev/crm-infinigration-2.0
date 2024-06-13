@@ -76,18 +76,53 @@ export const leadsReducer = createReducer(
       state.error = action.payload;
     },
 
-    forwardLeadRequest: (state) => {
+    assignLeadRequest: (state) => {
       state.loading = true;
     },
-    forwardLeadSuccess: (state, action) => {
+    assignLeadSuccess: (state, action) => {
       state.loading = false;
       state.message = action.payload.message;
     },
-    forwardLeadFail: (state, action) => {
+    assignLeadFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
 
+    uploadClientProfileRequest: (state) => {
+      state.loading = true;
+    },
+    uploadClientProfileSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    uploadClientProfileFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    updateClientProfileRequest: (state) => {
+      state.loading = true;
+    },
+    updateClientProfileSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    updateClientProfileFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    updateClientDocumentRequest: (state) => {
+      state.loading = true;
+    },
+    updateClientDocumentSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    updateClientDocumentFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     clearError: (state, action) => {
       state.error = null;
     },

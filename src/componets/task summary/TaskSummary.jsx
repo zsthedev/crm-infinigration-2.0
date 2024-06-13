@@ -12,6 +12,8 @@ import Loader from "../../pages/loader/Loader";
 const TaskSummary = ({ data }) => {
   const [visible, setVisible] = useState(false);
 
+  console.log(data)
+
   const [date, setDate] = useState("");
 
   const params = useParams();
@@ -60,10 +62,10 @@ const TaskSummary = ({ data }) => {
             ? data.map((d, index) => (
                 <tr key={index}>
                   <td>{d.createdAt.split("T")[0]}</td>
-                  <td>{d.doneBy}</td>
-                  <td>{d.title}</td>
-                  <td>{d.status}</td>
-                  <td>{d.followUpDate.split("T")[0] || "Nill"}</td>
+                  <td>{d.doneBy.bioData.name}</td>
+                  <td>{d.task}</td>
+                  <td>{d.status || "Nill"}</td>
+                  <td>{d.followUpDate && d.followUpDate.split("T")[0] || "Nill"}</td>
                   <td>{d.taskCloseDate || "Nill"}</td>
                   <td>{d.taskClosedBy || "Nill"}</td>
                   <td className="a">

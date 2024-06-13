@@ -34,8 +34,8 @@ const EmployeeSettings = () => {
         </thead>
 
         <tbody>
-          {employees && employees.employees.length > 0
-            ? employees.employees.map((e, index) => (
+          {employees && employees.length > 0
+            ? employees.map((e, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{e.bioData.name}</td>

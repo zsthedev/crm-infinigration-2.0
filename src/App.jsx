@@ -24,7 +24,6 @@ import AdminInvoices from "./pages/admin/invoices/AdminInvoices";
 import Programs from "./pages/admin/programs/Programs";
 import AdminFinances from "./pages/admin/finances/AdminFinances";
 import Reports from "./pages/admin/reports/Reports";
-import FilteredLeads from "./pages/admin/leads/FilteredLeads";
 import AddLeads from "./pages/admin/leads/AddLeads";
 import CreateContract from "./pages/admin/contracts/CreateContract";
 import AddNewProgram from "./pages/admin/programs/AddNewProgram";
@@ -38,77 +37,30 @@ import PaymentsMade from "./pages/admin/finances/PaymentsMade";
 import Bills from "./pages/admin/finances/Bills";
 import Expense from "./pages/admin/finances/Expense";
 import ViewContract from "./pages/admin/contracts/ViewContract";
+import Profile from "./pages/employees/Profile/Profile";
+
+import LocomotiveScroll from "locomotive-scroll";
+import CreateInvoice from "./pages/admin/invoices/CreateInvoice";
+import ViewInvoice from "./pages/admin/invoices/ViewInvoice";
+import Leads from "./pages/employees/Leads/Leads";
+import {
+  routes,
+  marketingRoutes,
+  salesRoutes,
+  operationRoutes,
+} from "./utils/routes";
+import { createLead } from "./redux/actions/leads";
+import Remarks from "./pages/employees/Remarks/Remarks";
+
 const App = () => {
-  const routes = [
-    {
-      value: "/admin/dashboard",
-      label: "Dashboard",
-      icon: { LuLayoutDashboard },
-    },
-    { value: "/admin/leads", label: "Leads", icon: { LuLayoutDashboard } },
-    {
-      value: "/admin/contracts",
-      label: "Contracts",
-      icon: { LuLayoutDashboard },
-    },
-    {
-      value: "/admin/invoices",
-      label: "Invoices",
-      icon: { LuLayoutDashboard },
-    },
-    {
-      value: "/admin/programs",
-      label: "Programs",
-      icon: { LuLayoutDashboard },
-    },
-    {
-      value: "/admin/finances",
-      label: "Finance",
-      icon: { LuLayoutDashboard },
-      subLinks: [
-        {
-          value: "/admin/finances/payments-received",
-          label: "Payments Received",
-        },
+  const locomotiveScroll = new LocomotiveScroll();
 
-        {
-          value: "/admin/finances/credit-notes",
-          label: "Credit Notes",
-        },
-
-        {
-          value: "/admin/finances/expense",
-          label: "Expenses",
-        },
-
-        {
-          value: "/admin/finances/bills",
-          label: "Bills",
-        },
-
-        {
-          value: "/admin/finances/payments-made",
-          label: "Payments Made",
-        },
-
-        {
-          value: "/admin/finances/vendor-credits",
-          label: "Vendor Credits",
-        },
-      ],
-    },
-    { value: "/admin/reports", label: "Reports", icon: { LuLayoutDashboard } },
-    {
-      value: "/admin/settings",
-      label: "Settings",
-      icon: { LuLayoutDashboard },
-    },
-  ];
   const { loading, error, message, isAuthenticated } = useSelector(
     (state) => state.user
   );
 
   const user = useSelector((state) => state.user.auth?.user);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (error) {
@@ -137,7 +89,9 @@ const App = () => {
               <ProtectedRoute
                 isAuthenticated={!isAuthenticated}
                 redirect={
-                  user && user.role === "admin" ? "/admin/dashboard" : "/"
+                  user && user.role === "admin"
+                    ? "/admin/dashboard"
+                    : "/profile"
                 }
               >
                 <Login />
@@ -151,7 +105,9 @@ const App = () => {
               <ProtectedRoute
                 isAuthenticated={!isAuthenticated}
                 redirect={
-                  user && user.role === "admin" ? "/admin/dashboard" : "/login"
+                  user && user.role === "admin"
+                    ? "/admin/dashboard"
+                    : "/profile"
                 }
               >
                 <Login />
@@ -163,7 +119,12 @@ const App = () => {
             path="/admin/dashboard"
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated} redirect="/">
-                <Sidebar navLists={routes} component={AdminDashboard} />
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
+                  component={AdminDashboard}
+                />
               </ProtectedRoute>
             }
           />
@@ -179,7 +140,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={Settings}
                   pageTitle="Settings"
                 />
@@ -198,7 +161,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={LeadSettings}
                   pageTitle="Leads Settings"
                 />
@@ -217,7 +182,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={EmployeeSettings}
                   pageTitle="Employee Settings"
                 />
@@ -236,7 +203,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={AddNewEmployee}
                   pageTitle="Add New Employee"
                 />
@@ -255,7 +224,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={ChangePassword}
                   pageTitle="Change Password"
                 />
@@ -274,7 +245,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={EmployeeProfile}
                   pageTitle="Profile Settings"
                 />
@@ -293,7 +266,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={AdminLeads}
                   pageTitle="Leads"
                 />
@@ -312,7 +287,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={AbroadQuestions}
                   pageTitle="Abroad Questions"
                 />
@@ -331,7 +308,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={AddQuestions}
                   pageTitle="Add Questions"
                 />
@@ -350,7 +329,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={LeadActivities}
                   pageTitle="Lead Activities"
                 />
@@ -362,7 +343,9 @@ const App = () => {
             path="/admin/contracts"
             element={
               <Sidebar
-                navLists={routes}
+                navLists={
+                  isAuthenticated && user.role === "admin" ? routes : ""
+                }
                 component={Contracts}
                 pageTitle="Contracts"
               />
@@ -380,9 +363,74 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={AdminInvoices}
                   pageTitle="Invoices"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/invoices/add"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
+                  component={CreateInvoice}
+                  pageTitle="Create Invoice"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/invoices/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
+                  component={ViewInvoice}
+                  pageTitle="View Invoice"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/invoices/add/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
+                  component={CreateInvoice}
+                  pageTitle="Create Invoice"
                 />
               </ProtectedRoute>
             }
@@ -399,7 +447,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={Programs}
                   pageTitle="Programs"
                 />
@@ -418,7 +468,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={ProgramDetails}
                   pageTitle="Programs"
                 />
@@ -437,7 +489,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={AdminFinances}
                   pageTitle="Finances"
                 />
@@ -456,7 +510,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={PaymentsReceived}
                   pageTitle="Payments Received"
                 />
@@ -475,7 +531,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={CreditNotes}
                   pageTitle="Credit Notes"
                 />
@@ -494,7 +552,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={Expense}
                   pageTitle="Expenses"
                 />
@@ -513,7 +573,9 @@ const App = () => {
                 redirectAdmin="/"
               >
                 <Sidebar
-                  navLists={routes}
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={Bills}
                   pageTitle="Bills"
                 />
@@ -579,25 +641,6 @@ const App = () => {
           />
 
           <Route
-            path="/admin/leads/filtered"
-            element={
-              <ProtectedRoute
-                isAuthenticated={isAuthenticated}
-                adminRoute={true}
-                isAdmin={user && user.role === "admin"}
-                redirect="/"
-                redirectAdmin="/"
-              >
-                <Sidebar
-                  navLists={routes}
-                  component={FilteredLeads}
-                  pageTitle="Total Leads"
-                />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
             path="/admin/leads/add"
             element={
               <ProtectedRoute
@@ -618,6 +661,25 @@ const App = () => {
 
           <Route
             path="/admin/contracts/add"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={CreateContract}
+                  pageTitle="Create New Contract"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/contracts/add/:id"
             element={
               <ProtectedRoute
                 isAuthenticated={isAuthenticated}
@@ -687,6 +749,124 @@ const App = () => {
                   navLists={routes}
                   component={AddNewProgram}
                   pageTitle="Create New Program"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Employee Routes */}
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated} redirect="/">
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.job.department === "marketing"
+                      ? marketingRoutes
+                      : isAuthenticated && user.job.department === "sales"
+                      ? salesRoutes
+                      : isAuthenticated && user.job.department === "operations"
+                      ? operationRoutes
+                      : routes
+                  }
+                  component={Profile}
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/leads"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.job.department === "marketing"
+                      ? marketingRoutes
+                      : isAuthenticated && user.job.department === "sales"
+                      ? salesRoutes
+                      : isAuthenticated && user.job.department === "operations"
+                      ? operationRoutes
+                      : routes
+                  }
+                  component={Leads}
+                  pageTitle="Leads"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/leads/add"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.job.department === "marketing"
+                      ? marketingRoutes
+                      : isAuthenticated && user.job.department === "sales"
+                      ? salesRoutes
+                      : isAuthenticated && user.job.department === "operations"
+                      ? operationRoutes
+                      : routes
+                  }
+                  component={AddLeads}
+                  pageTitle="Create Lead"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/leads/view/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.job.department === "marketing"
+                      ? marketingRoutes
+                      : isAuthenticated && user.job.department === "sales"
+                      ? salesRoutes
+                      : isAuthenticated && user.job.department === "operations"
+                      ? operationRoutes
+                      : routes
+                  }
+                  component={LeadActivities}
+                  pageTitle="Create Lead"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/leads/remarks/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.job.department === "marketing"
+                      ? marketingRoutes
+                      : isAuthenticated && user.job.department === "sales"
+                      ? salesRoutes
+                      : isAuthenticated && user.job.department === "operations"
+                      ? operationRoutes
+                      : routes
+                  }
+                  component={Remarks}
+                  pageTitle="Remarks"
                 />
               </ProtectedRoute>
             }

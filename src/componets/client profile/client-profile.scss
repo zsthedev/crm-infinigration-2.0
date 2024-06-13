@@ -26,6 +26,12 @@
             height: 150px;
             border-radius: 50%;
             background-color: $light-color;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        button{
+            width: 150px;
         }
     }
 

@@ -54,7 +54,10 @@ export const getLeadDetails = (id) => async (dispatch) => {
 
     dispatch({ type: "getLeadDetailsSuccess", payload: data.lead });
   } catch (error) {
-    dispatch({ type: "getLeadDetailsFail", payload: error.response.data.message });
+    dispatch({
+      type: "getLeadDetailsFail",
+      payload: error.response.data.message,
+    });
   }
 };
 
@@ -125,3 +128,97 @@ export const addFollowUpDate = (leadId, date, taskId) => async (dispatch) => {
     });
   }
 };
+
+export const assignLead = (leadId, userId) => async (dispatch) => {
+  dispatch({ type: "assignLeadRequest" });
+
+  try {
+    const { data } = await axios.post(
+      `${server}/assignlead`,
+      { leadId: leadId, userId: userId },
+
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ type: "assignLeadSuccess", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "assignLeadFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const uploadClientProfile = (formdata, id) => async (dispatch) => {
+  dispatch({ type: "uploadClientProfileRequest" });
+
+  try {
+    const { data } = await axios.post(
+      `${server}/uploadclientavatar/${id}`,
+      formdata,
+
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ type: "uploadClientProfileSuccess", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "uploadClientProfileFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateClientProfile = (cnic, dob, id) => async (dispatch) => {
+  dispatch({ type: "uploadClientProfileRequest" });
+
+  try {
+    const { data } = await axios.put(
+      `${server}/updateclientprofile/${id}`,
+      { cnic, dob },
+
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ type: "uploadClientProfileSuccess", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "uploadClientProfileFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
+export const uploadClientDocuments = (formdata, lId, dId) => async (dispatch) => {
+  dispatch({ type: "uploadClientDocumentRequest" });
+
+  try {
+    const { data } = await axios.put(
+      `${server}/uploadclientdocument/${lId}/${dId}`,
+      formdata,
+
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ type: "uploadClientDocumentSuccess", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "uploadClientDocumentFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+

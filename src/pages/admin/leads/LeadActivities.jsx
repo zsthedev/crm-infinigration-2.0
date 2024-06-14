@@ -14,29 +14,26 @@ const LeadActivities = () => {
 
   const params = useParams();
   const id = params.id;
-  const { loading, leads, details } = useSelector((state) => state.leads);
-
-  let tasks = leads && leads.leads.find((l) => l._id.toString() === id);
-
-  tasks = tasks.taskSummary;
+  const { loading, leads } = useSelector((state) => state.leads);
   const [activity, setActivity] = useState("summary");
-
   const options = [
     { value: "summary", label: "Task Summary" },
     { value: "profile", label: "Client Profile" },
     { value: "documents", label: "Documents" },
   ];
 
-  useEffect(() => {
-    dispatch(getLeadDetails(id));
-  }, []);
+  const filteredLead =
+    leads && leads.leads.length > 0
+      ? leads.leads.find((l) => l._id === id)
+      : [];
 
-  console.log(activity);
-  return loading || !details || !leads ? (
+  console.log(filteredLead);
+  return loading || !leads ? (
     <Loader />
   ) : (
     <section className="section" id="lead-activities">
-      <ClientProfile client={details.client} />
+      <ClientProfile client={filteredLead.client}  assignedTo={filteredLead.assignedTo} leadId={params.id}/>
+
       <div className="selector">
         <Select
           placeholder={"Task Summary"}
@@ -48,12 +45,16 @@ const LeadActivities = () => {
       </div>
 
       {activity.value === "summary" || activity === "summary" ? (
-        <TaskSummary data={tasks} />
+        <TaskSummary data={filteredLead.taskSummary} />
       ) : (
         ""
       )}
-      {activity.value === "profile" ? <Profiling /> : ""}
-      {activity.value === "documents" ? <Documents programs={details.client.program}/> : ""}
+      {activity.value === "profile" ? <Profiling client={filteredLead.client}/> : ""}
+      {activity.value === "documents" ? (
+        <Documents documents={filteredLead.documents} />
+      ) : (
+        ""
+      )}
     </section>
   );
 };

@@ -20,7 +20,7 @@ export const adminReducer = createReducer(
     },
     getEmployeesSuccess: (state, action) => {
       state.loading = false;
-      state.employees = action.payload;
+      state.employees = action.payload.employees;
     },
     getEmployeesFail: (state, action) => {
       state.loading = false;

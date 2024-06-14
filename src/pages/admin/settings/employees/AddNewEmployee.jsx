@@ -43,8 +43,8 @@ const AddNewEmployee = () => {
 
   const depOptions = [
     { value: "marketing", label: "Marketing" },
+    { value: "sales", label: "Sales" },
     { value: "operations", label: "Operations" },
-    { value: "finance", label: "Finance" },
   ];
 
   const dispatch = useDispatch();
@@ -84,6 +84,24 @@ const AddNewEmployee = () => {
         role.value,
         password
       )
+    );
+
+    console.log(
+      name,
+      fatherName,
+      cnic,
+      mobileNumber,
+      email,
+      gender.value,
+      dob,
+      maritalStatus.value,
+      religion,
+      nationality,
+      jobTitle,
+      department.value,
+      salary,
+      role.value,
+      password
     );
   };
 

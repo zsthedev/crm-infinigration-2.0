@@ -11,11 +11,15 @@ const Contracts = () => {
     dispatch(getAllContracts());
   }, []);
 
+  console.log(contracts);
+
   return (
     <section className="section" id="contracts">
       <div className="actions-row">
         <input type="text" placeholder="Search" />
-        <button className="primary-btn">Add New</button>
+        <Link to={"/admin/contracts/add"} className="primary-btn">
+          Add New
+        </Link>
       </div>
       <table>
         <thead>
@@ -37,11 +41,12 @@ const Contracts = () => {
                   <td>{c.lead.client.name}</td>
                   <td>{c.createdAt.split("T")[0]}</td>
                   <td>{c.lead.status}</td>
-                  <td>{c.program.generalInformation[0].totalCost} Lacs (PKR)</td>
+                  <td>
+                    {c.program.generalInformation[0].totalCost} Lacs (PKR)
+                  </td>
                   <td className="actions">
-                    <button>Send Email</button>
-                    <button>Send Invoice</button>
                     <Link to={`/admin/contract/${c._id}`}>View</Link>
+                    <Link to={`/admin/invoices/add/${c._id}`}>Convert to Invoice</Link>
                   </td>
                 </tr>
               ))

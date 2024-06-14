@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import "./invoices.scss";
 import CustomSelect from "../../../componets/CustomSelect/CustomSelect";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllInvoices } from "../../../redux/actions/invoice";
 const AdminInvoices = () => {
   const [filter, setFilter] = useState();
   const options = [
     { value: "bank", label: "Bank" },
     { value: "cash", label: "Cash" },
   ];
-
   const [open, isOpen] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllInvoices());
+  }, []);
+
+  const { invoices } = useSelector((state) => state.invoices);
   return (
     <section className="section" id="admin-invoices">
       <div className="actions-row">
@@ -20,18 +28,18 @@ const AdminInvoices = () => {
           value={filter}
           onChange={setFilter}
         />
-        <button className="primary-btn">Apply</button>
+
+        <Link className="primary-btn" to={"/admin/invoices/add"}>
+          Add New
+        </Link>
       </div>
       <table>
         <thead>
           <tr>
             <th>Sr</th>
             <th>Date</th>
-            <th>Due Date</th>
             <th>Total</th>
-            <th>Installement 01</th>
-            <th>Installement 02</th>
-            <th>Installement 03</th>
+            <th>Installements</th>
             <th>Paid</th>
             <th>Outstanding</th>
             <th>Actions</th>
@@ -39,37 +47,34 @@ const AdminInvoices = () => {
         </thead>
 
         <tbody>
-          <tr>
-            <td>01</td>
-            <td>Today</td>
-            <td>Tomorrow</td>
-            <td>100,000</td>
-            <td className="span-td">
-              30,000 <span className="success">Paid</span>
-            </td>
-            <td className="span-td">
-              30,000 <span className="pending">Pending</span>
-            </td>
+          {invoices && invoices.length > 0
+            ? invoices.map((i, index) => (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{i.createdAt.split("T")[0]}</td>
+                  <td>{i.totalAmount} PKR</td>
+                  <td className="span-td">{i.contract.installements.length}</td>
 
-            <td className="span-td">
-              40,000 <span className="fail">Not Sent</span>
-            </td>
+                  <td>{i.paid} PKR</td>
+                  <td>{i.outstanding} PKR</td>
+                  <td className="act-row">
+                    <div className="a-row">
+                      <Link to={`/admin/invoices/${i._id}`}>View</Link>
+                      <button>Download</button>
+                      <button onClick={() => isOpen(!open)}>Send</button>
+                    </div>
 
-            <td>30,000</td>
-            <td>70,000</td>
-            <td className="act-row">
-              <div className="a-row">
-                <button>View</button>
-                <button>Download</button>
-                <button onClick={() => isOpen(!open)}>Send</button>
-              </div>
-
-              <form action="" style={{ display: open ? "flex" : "none" }}>
-                <CustomSelect placeholder="Select Installement" color="" />
-                <button>Send</button>
-              </form>
-            </td>
-          </tr>
+                    <form action="" style={{ display: open ? "flex" : "none" }}>
+                      <CustomSelect
+                        placeholder="Select Installement"
+                        color=""
+                      />
+                      <button>Send</button>
+                    </form>
+                  </td>
+                </tr>
+              ))
+            : ""}
         </tbody>
       </table>
     </section>

@@ -7,15 +7,47 @@ import { getAllLeads } from "../../../redux/actions/leads";
 import { createContract } from "../../../redux/actions/contract";
 import Loader from "../../loader/Loader";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateContract = () => {
   const [installments, setInstallments] = useState([
     { amount: "", stage: "", remarks: "" },
   ]);
 
-  const [program, setProgram] = useState("");
-  const [lead, setLead] = useState("");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllPrograms());
+    dispatch(getAllLeads());
+  }, []);
+
+  const { leads } = useSelector((state) => state.leads);
+  const { programs } = useSelector((state) => state.program);
+
+  const params = useParams();
+
+  const [program, setProgram] = useState(
+    leads && leads.leads.length > 0 && params.id !== undefined
+      ? leads.leads
+          .filter((l) => l._id === params.id)
+          .map((l) => ({
+            value: l.client.program && l.client.program._id,
+            label:
+              l.client.program &&
+              l.client.program.generalInformation[0].country,
+          }))
+      : []
+  );
+
+  const [lead, setLead] = useState(
+    leads && leads.leads.length > 0 && params.id !== undefined
+      ? leads.leads
+          .filter((l) => l._id === params.id)
+          .map((l) => ({
+            value: l._id,
+            label: l.client.name,
+          }))
+      : []
+  );
 
   const handleAddInstallment = () => {
     setInstallments([...installments, { amount: "", stage: "", remarks: "" }]);
@@ -31,14 +63,6 @@ const CreateContract = () => {
     e.preventDefault();
     dispatch(createContract(lead.value, program.value, installments));
   };
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllPrograms());
-    dispatch(getAllLeads());
-  }, []);
-
-  const { leads } = useSelector((state) => state.leads);
-  const { programs } = useSelector((state) => state.program);
 
   const { loading, message, error } = useSelector((state) => state.contract);
 
@@ -65,7 +89,7 @@ const CreateContract = () => {
         type: "clearMessage",
       });
 
-      navigate("/admin/contracts")
+      navigate("/admin/contracts");
     }
 
     if (error) {

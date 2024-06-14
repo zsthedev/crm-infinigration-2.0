@@ -6,12 +6,15 @@ import Loader from "../../loader/Loader";
 import { createRemarks } from "../../../redux/actions/remark";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { getAllLeads } from "../../../redux/actions/leads";
 const Remarks = () => {
   const { loading, error, message } = useSelector((state) => state.remarks);
+  const { leads } = useSelector((state) => state.leads);
   const [title, setTitle] = useState("");
   const [remark, setRemark] = useState("");
   const dispatch = useDispatch();
   const params = useParams();
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(createRemarks(params.id, title, remark));
@@ -24,10 +27,21 @@ const Remarks = () => {
     }
 
     if (message) {
-        toast.success(message);
-        dispatch({ type: "clearMessage" });
-      }
-  }, [error,message]);
+      toast.success(message);
+      dispatch({ type: "clearMessage" });
+    }
+  }, [error, message]);
+
+  const filteredLead =
+    leads.leads && leads.leads.length > 0
+      ? leads.leads.find((f) => f._id === params.id)
+      : "";
+
+  console.log(filteredLead.remarks);
+
+  useEffect(() => {
+    dispatch(getAllLeads());
+  }, [message]);
 
   return loading ? (
     <Loader />
@@ -52,7 +66,17 @@ const Remarks = () => {
       </form>
 
       <div className="review-container">
-        <Remark />
+        {filteredLead.remarks && filteredLead.remarks.length > 0
+          ? filteredLead.remarks.map((r, index) => (
+              <Remark
+                name={r.author.bioData.name}
+                time={r.createdAt.split("T")[0]}
+                image={r.author.avatar.url}
+                remark={r.remark}
+                title={r.title}
+              />
+            ))
+          : ""}
       </div>
     </section>
   );

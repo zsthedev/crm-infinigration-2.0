@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Dropzone from "dropzone";
 import { useDropzone } from "react-dropzone";
 import "./add-leads.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,24 +9,23 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../loader/Loader";
 import Select from "react-select";
 import { getAllPrograms } from "../../../redux/actions/program";
+import * as XLSX from "xlsx";
 
 const AddLeads = () => {
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
-  const [clientEmail, setClientEmail] = useState("");
-  const [clientProgram, setClientProgram] = useState("");
   const [clientSource, setClientSource] = useState("");
   const [leads, setLeads] = useState([]);
   const dispatch = useDispatch();
   const { loading, error, message } = useSelector((state) => state.leads);
   const navigate = useNavigate();
-
   const { programs } = useSelector((state) => state.program);
 
   const sourceOptions = [
     { value: "facebook", label: "Facebook" },
     { value: "instagram", label: "Instagram" },
   ];
+
   useEffect(() => {
     if (message) {
       toast.success(message);
@@ -46,20 +44,40 @@ const AddLeads = () => {
     const newLead = {
       name: clientName,
       phone: clientPhone,
-      email: clientEmail,
-      program: clientProgram.value,
       source: clientSource.value,
       status: "Created",
     };
     const updatedLeads = [...leads, newLead];
     dispatch(createLead(updatedLeads));
 
-    console.log(updatedLeads);
+    setClientName("");
+    setClientPhone("");
+    setClientSource("");
     setLeads([]);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
+    const file = acceptedFiles[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+      // Extracting leads data from rows
+      const newLeads = rows.map((row) => ({
+        name: row[0], // assuming first column is name
+        phone: row[1], // assuming second column is phone number
+        source: row[2], // assuming third column is source
+        status: "Created",
+      }));
+
+      // Updating leads state
+      setLeads((prevLeads) => [...prevLeads, ...newLeads]);
+    };
+    reader.readAsArrayBuffer(file);
   }, []);
 
   useEffect(() => {
@@ -75,6 +93,11 @@ const AddLeads = () => {
       : [];
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const clickHandler = (e) => {
+    e.preventDefault();
+    dispatch(createLead(leads))
+  };
   return loading ? (
     <Loader />
   ) : (
@@ -93,19 +116,7 @@ const AddLeads = () => {
             value={clientPhone}
             onChange={(e) => setClientPhone(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="Client Email"
-            value={clientEmail}
-            onChange={(e) => setClientEmail(e.target.value)}
-          />
-          <Select
-            placeholder="Choose Program"
-            value={clientProgram}
-            onChange={setClientProgram}
-            defaultValue={clientProgram}
-            options={programOptions}
-          />
+
           <Select
             placeholder="Choose Source"
             value={clientSource}
@@ -127,6 +138,22 @@ const AddLeads = () => {
           </div>
         </div>
       </div>
+
+      {/* Display parsed leads */}
+      {leads.length > 0 && (
+        <div className="parsed-leads">
+          <h3>Parsed Leads:</h3>
+          <ul>
+            {leads.map((lead, index) => (
+              <li key={index}>
+                {lead.name}, {lead.phone}, {lead.source}
+              </li>
+            ))}
+          </ul>
+
+          <button onClick={clickHandler} className="primary-btn">Create</button>
+        </div>
+      )}
     </section>
   );
 };

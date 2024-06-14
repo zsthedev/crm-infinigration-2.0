@@ -132,7 +132,7 @@ const AdminLeads = () => {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{l.client.name}</td>
-                      <td>{l.client.program.generalInformation[0].country}</td>
+                      <td>{l.client.program ? l.client.program.generalInformation[0].country : "Not Selected Yet"}</td>
                       <td>{l.createdAt.split("T")[0]}</td>
                       <td>Nill</td>
                       <td>{l.status}</td>

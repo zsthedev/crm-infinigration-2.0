@@ -30,8 +30,10 @@ const CreateContract = () => {
       ? leads.leads
           .filter((l) => l._id === params.id)
           .map((l) => ({
-            value: l.client.program._id,
-            label: l.client.program.generalInformation[0].country,
+            value: l.client.program && l.client.program._id,
+            label:
+              l.client.program &&
+              l.client.program.generalInformation[0].country,
           }))
       : []
   );

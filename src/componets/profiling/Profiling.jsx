@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./profiling.scss";
+import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateClientProfile,
@@ -7,11 +8,27 @@ import {
 } from "../../redux/actions/leads";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-const Profiling = ({client}) => {
+import { getAllPrograms } from "../../redux/actions/program";
+const Profiling = ({ client }) => {
   const [cnic, setCnic] = useState(client.cnic);
-  const [dob, setDob] = useState(client.dob.split("T")[0]);
+  const [email, setEmail] = useState(client.email);
+  const [program, setProgram] = useState(client.email);
+  const [dob, setDob] = useState(
+    client.dob != null ? client.dob.split("T")[0] : "Nill"
+  );
+  const { programs } = useSelector((state) => state.program);
 
-  console.log(client)
+  useEffect(() => {
+    dispatch(getAllPrograms());
+  }, []);
+
+  const programOptions =
+    programs && programs.length > 0
+      ? programs.map((p) => ({
+          value: p._id,
+          label: p.generalInformation[0].country,
+        }))
+      : [];
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -42,10 +59,10 @@ const Profiling = ({client}) => {
     }
   }, [error, loading, message]);
 
-
   return (
     <div className="section" id="profiling">
       <h2 className="heading">Profile</h2>
+
       <form action="" onSubmit={submitHandler}>
         <div className="la">
           <label htmlFor="">CNIC</label>
@@ -65,6 +82,25 @@ const Profiling = ({client}) => {
             value={dob}
             onChange={(e) => setDob(e.target.value)}
           />
+        </div>
+
+        <div className="la">
+          <label htmlFor="">Email</label>
+          <input
+            type="text"
+            placeholder="Enter Date of Birth"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="se">
+          <Select
+            options={programOptions}
+            value={program}
+            onChange={setProgram}
+            placeholder="Choose Country"
+          ></Select>
         </div>
 
         <button className="primary-btn">Update Profile</button>

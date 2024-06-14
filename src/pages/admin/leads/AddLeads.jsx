@@ -66,10 +66,13 @@ const AddLeads = () => {
     dispatch(getAllPrograms());
   }, []);
 
-  const programOptions = programs.map((p) => ({
-    value: p._id,
-    label: p.generalInformation[0].country,
-  }));
+  const programOptions =
+    programs && programs.length > 0
+      ? programs.map((p) => ({
+          value: p._id,
+          label: p.generalInformation[0].country,
+        }))
+      : "";
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return loading ? (

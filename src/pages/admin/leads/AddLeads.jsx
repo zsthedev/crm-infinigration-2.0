@@ -90,7 +90,7 @@ const AddLeads = () => {
           value: p._id,
           label: p.generalInformation[0].country,
         }))
-      : [];
+      : "";
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

@@ -1,10 +1,11 @@
 import React from "react";
 import "./remark.scss";
-const Remark = ({name, image, time, title, remark}) => {
+import placeholder from "../../assets/placeholder.jpg";
+const Remark = ({ name, image, time, title, remark }) => {
   return (
     <div id="remark">
       <div className="profile">
-        <img src={image} alt="" />
+        <img src={image != "temp_url" ? image : placeholder} alt="" />
         <div className="text">
           <p className="name">{name}</p>
           <p className="createdAt">{time}</p>

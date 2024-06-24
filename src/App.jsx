@@ -801,6 +801,30 @@ const App = () => {
           />
 
           <Route
+            path="/contracts"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.job.department === "marketing"
+                      ? marketingRoutes
+                      : isAuthenticated && user.job.department === "sales"
+                      ? salesRoutes
+                      : isAuthenticated && user.job.department === "operations"
+                      ? operationRoutes
+                      : routes
+                  }
+                  component={Contracts}
+                  pageTitle="Contracts"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/leads/add"
             element={
               <ProtectedRoute
@@ -866,6 +890,30 @@ const App = () => {
                       : routes
                   }
                   component={Remarks}
+                  pageTitle="Remarks"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/leads/:id/activities"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.job.department === "marketing"
+                      ? marketingRoutes
+                      : isAuthenticated && user.job.department === "sales"
+                      ? salesRoutes
+                      : isAuthenticated && user.job.department === "operations"
+                      ? operationRoutes
+                      : routes
+                  }
+                  component={LeadActivities}
                   pageTitle="Remarks"
                 />
               </ProtectedRoute>

@@ -51,11 +51,10 @@ export const routes = [
       },
     ],
   },
-  { value: "/admin/reports", label: "Reports", },
+  { value: "/admin/reports", label: "Reports" },
   {
     value: "/admin/settings",
     label: "Settings",
-    
   },
 ];
 
@@ -92,5 +91,10 @@ export const operationRoutes = [
   {
     value: "/leads",
     label: "Leads",
+  },
+
+  {
+    value: "/contracts",
+    label: "Contracts",
   },
 ];

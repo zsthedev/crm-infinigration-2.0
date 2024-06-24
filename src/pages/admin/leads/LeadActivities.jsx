@@ -27,7 +27,9 @@ const LeadActivities = () => {
       ? leads.leads.find((l) => l._id === id)
       : [];
 
-  console.log(filteredLead);
+
+      
+  console.log(filteredLead.client.program.documents);
   return loading || !leads ? (
     <Loader />
   ) : (

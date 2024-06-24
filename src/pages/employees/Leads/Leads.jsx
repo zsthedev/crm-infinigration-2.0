@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { assignLead, getAllLeads } from "../../../redux/actions/leads";
+import {
+  assignLead,
+  forwardLead,
+  getAllLeads,
+} from "../../../redux/actions/leads";
 import Select from "react-select";
 import { getEmployees } from "../../../redux/actions/admin";
 import toast from "react-hot-toast";
 import Loader from "../../loader/Loader";
+import "./leads.scss";
 
 const Leads = () => {
   const [isFOpen, setFOpen] = useState(null); // State to track which row's "Assign Lead" form is open
-  const [forward, setForward] = useState(""); // State to hold selected forward option
+  const [forward, setForward] = useState("");
+  const [forwardl, setForwardl] = useState("");
   const { employees } = useSelector((state) => state.admin);
   const { auth } = useSelector((state) => state.user);
   const { loading, error, message, leads } = useSelector(
@@ -53,10 +59,27 @@ const Leads = () => {
         }))
     : [];
 
+  const operationOptions = employees
+    ? employees
+        .filter(
+          (e) => e._id !== auth.user._id && e.job.department === "operations"
+        )
+        .map((e) => ({
+          value: e._id,
+          label: `${e.bioData.name}, (${e.job.department})`,
+        }))
+    : [];
+
   const assignSubmitHandler = (e, id) => {
     e.preventDefault();
-    dispatch(assignLead(id, forward.value)); // Dispatch assignLead action with lead ID and selected forward value
+    dispatch(assignLead(id, forward.value));
     setFOpen(null); // Close the "Assign Lead" form after submission
+  };
+
+  const forwardLeadHandler = (e, id) => {
+    e.preventDefault();
+    dispatch(forwardLead(id, forwardl.value));
+    setFOpen(false);
   };
 
   console.log(auth.user.assignedLeads);
@@ -95,17 +118,33 @@ const Leads = () => {
               ? auth.user.assignedLeads.map((l, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{l.client.name}</td>
-                    <td>{l.client.program}</td>
-                    <td>{l.createdAt.split("T")[0]}</td>
+                    <td>{l.client && l.client.name}</td>
+                    <td>{l.client && l.client.program}</td>
+                    <td>{l.client && l.createdAt.split("T")[0]}</td>
                     <td>Nill</td>
                     <td>{l.status}</td>
                     <td>{l.source}</td>
-                    <td className="actions">
+                    <td className="act-row">
                       {/* Display "Forward Lead" button for sales department */}
-                      <button onClick={() => setFOpen(index)}>
+                      <button onClick={() => setFOpen(!isFOpen)}>
                         Forward Lead
                       </button>
+
+                      <form
+                        action=""
+                        onSubmit={(e) => {
+                          forwardLeadHandler(e, l._id);
+                        }}
+                        style={{ display: isFOpen ? "flex" : "none" }}
+                      >
+                        <Select
+                          placeholder="Choose Person"
+                          options={operationOptions}
+                          value={forwardl}
+                          onChange={setForwardl}
+                        />
+                        <button>Apply</button>
+                      </form>
 
                       <Link to={`/leads/remarks/${l._id}`}>Add Remarks</Link>
                     </td>
@@ -164,6 +203,42 @@ const Leads = () => {
                 </td>
               </tr>
             ))}
+          </tbody>
+        </table>
+      )}
+
+      {auth && auth.user.job.department === "operations" && (
+        <table>
+          <thead>
+            <tr>
+              <th>Sr</th>
+              <th>Name</th>
+              <th>Program Selected</th>
+              <th>Created At</th>
+              <th>Delayed by</th>
+              <th>Status</th>
+              <th>Source</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {auth.user.forwardedLeads && auth.user.forwardedLeads.length > 0
+              ? auth.user.forwardedLeads.map((l, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{l.client && l.client.name}</td>
+                    <td>{l.client && l.client.program}</td>
+                    <td>{l.client && l.createdAt.split("T")[0]}</td>
+                    <td>Nill</td>
+                    <td>{l.status}</td>
+                    <td>{l.source}</td>
+                    <td className="act-row">
+                      <Link to={`${l._id}/activities`}>Activities</Link>
+                    </td>
+                  </tr>
+                ))
+              : ""}
           </tbody>
         </table>
       )}

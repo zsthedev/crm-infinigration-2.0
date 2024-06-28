@@ -10,11 +10,17 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getAllPrograms } from "../../redux/actions/program";
 const Profiling = ({ client }) => {
+  const params = useParams();
+  const { leads } = useSelector((state) => state.leads);
+  let filteredLead =
+    leads && leads.length > 0 ? leads.find((l) => l._id === "") : params.id;
+
+  console.log(filteredLead);
   const [cnic, setCnic] = useState(client.cnic);
   const [email, setEmail] = useState(client.email);
-  const [program, setProgram] = useState(client.email);
+  const [program, setProgram] = useState(client.program);
   const [dob, setDob] = useState(
-    client.dob != null ? client.dob.split("T")[0] : "Nill"
+    client.dob != null ? client.dob.split("T")[0] : ""
   );
   const { programs } = useSelector((state) => state.program);
 
@@ -31,19 +37,15 @@ const Profiling = ({ client }) => {
       : [];
 
   const dispatch = useDispatch();
-  const params = useParams();
+
   const submitHandler = (e) => {
     e.preventDefault();
-
-    if (cnic === "" && dob === "") {
-      return toast.error("Please enter any feild");
-    }
 
     if (cnic.length > 13) {
       return toast.error("Invalid CNIC");
     }
 
-    dispatch(updateClientProfile(cnic, dob, params.id));
+    dispatch(updateClientProfile(cnic, dob, program.value, email, params.id));
   };
   const { error, loading, message } = useSelector((state) => state.leads);
 
@@ -94,7 +96,8 @@ const Profiling = ({ client }) => {
           />
         </div>
 
-        <div className="se">
+        <div className="se la">
+          <label htmlFor="">Program</label>
           <Select
             options={programOptions}
             value={program}

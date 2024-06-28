@@ -80,7 +80,7 @@ const ClientProfile = ({ client, assignedTo, leadId }) => {
           />
         </div>
 
-        <button className="primary-btn">Update</button>
+        {/* <button className="primary-btn">Update</button> */}
       </form>
 
       {/* <div className="cta">

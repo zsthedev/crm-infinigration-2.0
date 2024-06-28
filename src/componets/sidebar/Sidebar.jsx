@@ -41,6 +41,8 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
         <div className="row">
           <div className="nav">
             <img src={logo} className="logo" alt="" />
+
+            
             {navLists && navLists.length > 0
               ? navLists.map((l, index) => (
                   <div className="link-container" key={index}>

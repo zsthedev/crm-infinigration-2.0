@@ -20,6 +20,7 @@ const LeadActivities = () => {
     { value: "summary", label: "Task Summary" },
     { value: "profile", label: "Client Profile" },
     { value: "documents", label: "Documents" },
+    { value: "remarks", label: "Remarks" },
   ];
 
   const filteredLead =
@@ -32,7 +33,11 @@ const LeadActivities = () => {
     <Loader />
   ) : (
     <section className="section" id="lead-activities">
-      <ClientProfile client={filteredLead.client}  assignedTo={filteredLead.assignedTo} leadId={params.id}/>
+      <ClientProfile
+        client={filteredLead.client}
+        assignedTo={filteredLead.assignedTo}
+        leadId={params.id}
+      />
 
       <div className="selector">
         <Select
@@ -49,8 +54,14 @@ const LeadActivities = () => {
       ) : (
         ""
       )}
-      {activity.value === "profile" ? <Profiling client={filteredLead.client}/> : ""}
+      {activity.value === "profile" ? (
+        <Profiling client={filteredLead.client} />
+      ) : (
+        ""
+      )}
       {activity.value === "documents" ? (
+        <Documents documents={filteredLead.documents} />
+      ) : activity.value === "remarks" ? (
         <Documents documents={filteredLead.documents} />
       ) : (
         ""

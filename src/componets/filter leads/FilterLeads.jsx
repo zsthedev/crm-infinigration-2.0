@@ -19,14 +19,16 @@ const FilterLeads = ({
   const { employees } = useSelector((state) => state.admin);
   const { auth } = useSelector((state) => state.user);
 
-
-
   const employeeOptions =
     employees && employees.length > 0
-      ? employees.filter((f) => f._id !== auth.user._id).map((e, index) => ({
-          value: e._id,
-          label: `${e.bioData.name} (${e.job.department})`,
-        }))
+      ? employees
+          .filter((f) => f._id !== auth.user._id)
+          .map((e, index) => ({
+            value: e._id,
+            label: `${e.bioData && e.bioData.name} (${
+              e.job && e.job.department
+            })`,
+          }))
       : [];
   const dispatch = useDispatch();
 

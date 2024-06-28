@@ -67,7 +67,7 @@ const AdminLeads = () => {
         .filter((e) => e._id !== auth.user._id)
         .map((e) => ({
           value: e._id,
-          label: `${e.bioData.name}, (${e.job.department})`,
+          label: `${e.bioData && e.bioData.name}, (${e.job && e.job.department})`,
         }))
     : [];
 

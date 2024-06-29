@@ -120,6 +120,7 @@ const AdminLeads = () => {
                 <th>Program Selected</th>
                 <th>Created At</th>
                 <th>Campaign</th>
+                <th>City</th>
                 <th>Status</th>
                 <th>Source</th>
                 <th>Actions</th>
@@ -134,7 +135,8 @@ const AdminLeads = () => {
                       <td>{l.client.name}</td>
                       <td>{l.client.program ? l.client.program.generalInformation[0].country : "Not Selected Yet"}</td>
                       <td>{l.createdAt.split("T")[0]}</td>
-                      <td>{l.campaign}</td>
+                      <td>{l.client.campaign}</td>
+                      <td>{l.client.city}</td>
                       <td>{l.status}</td>
                       <td>{l.source}</td>
                       <td className="act-row">

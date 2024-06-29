@@ -14,7 +14,9 @@ import * as XLSX from "xlsx";
 const AddLeads = () => {
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
+  const [clientCity, setClientCity] = useState("");
   const [clientSource, setClientSource] = useState("");
+  const [campaign, setCampaign] = useState("");
   const [leads, setLeads] = useState([]);
   const dispatch = useDispatch();
   const { loading, error, message } = useSelector((state) => state.leads);
@@ -45,6 +47,8 @@ const AddLeads = () => {
       name: clientName,
       phone: clientPhone,
       source: clientSource.value,
+      city: clientCity,
+      campaign: campaign,
       status: "Created",
     };
     const updatedLeads = [...leads, newLead];
@@ -52,7 +56,9 @@ const AddLeads = () => {
 
     setClientName("");
     setClientPhone("");
+    setClientCity("");
     setClientSource("");
+    setCampaign("");
     setLeads([]);
   };
 
@@ -66,11 +72,13 @@ const AddLeads = () => {
       const sheet = workbook.Sheets[sheetName];
       const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-      // Extracting leads data from rows
-      const newLeads = rows.map((row) => ({
-        name: row[0], // assuming first column is name
-        phone: row[1], // assuming second column is phone number
-        source: row[2], // assuming third column is source
+      // Extracting leads data from rows and ignoring the first row (header)
+      const newLeads = rows.slice(1).map((row) => ({
+        name: row[0],
+        phone: row[1],
+        source: row[2],
+        city: row[3],
+        campaign: row[4],
         status: "Created",
       }));
 
@@ -82,7 +90,7 @@ const AddLeads = () => {
 
   useEffect(() => {
     dispatch(getAllPrograms());
-  }, []);
+  }, [dispatch]);
 
   const programOptions =
     programs && programs.length > 0
@@ -96,8 +104,9 @@ const AddLeads = () => {
 
   const clickHandler = (e) => {
     e.preventDefault();
-    dispatch(createLead(leads))
+    dispatch(createLead(leads));
   };
+
   return loading ? (
     <Loader />
   ) : (
@@ -110,11 +119,25 @@ const AddLeads = () => {
             value={clientName}
             onChange={(e) => setClientName(e.target.value)}
           />
+
+          <input
+            type="text"
+            placeholder="Client City"
+            value={clientCity}
+            onChange={(e) => setClientCity(e.target.value)}
+          />
           <input
             type="text"
             placeholder="Client Phone"
             value={clientPhone}
             onChange={(e) => setClientPhone(e.target.value)}
+          />
+
+          <input
+            type="text"
+            placeholder="Campaign"
+            value={campaign}
+            onChange={(e) => setCampaign(e.target.value)}
           />
 
           <Select
@@ -146,12 +169,15 @@ const AddLeads = () => {
           <ul>
             {leads.map((lead, index) => (
               <li key={index}>
-                {lead.name}, {lead.phone}, {lead.source}
+                {lead.name}, {lead.phone}, {lead.source}, {lead.city},{" "}
+                {lead.campaign}
               </li>
             ))}
           </ul>
 
-          <button onClick={clickHandler} className="primary-btn">Create</button>
+          <button onClick={clickHandler} className="primary-btn">
+            Create
+          </button>
         </div>
       )}
     </section>

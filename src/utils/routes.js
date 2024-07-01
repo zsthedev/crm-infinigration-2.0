@@ -4,6 +4,7 @@ export const routes = [
     label: "Dashboard",
   },
   { value: "/admin/leads", label: "Leads" },
+  { value: "/admin/clients", label: "Clients" },
   {
     value: "/admin/contracts",
     label: "Contracts",

@@ -19,7 +19,7 @@ const EmployeeProfile = () => {
     dispatch(getEmployee(params.id));
   }, []);
   return loading ? (
-    <Loader /> || !employee.employee
+    <Loader /> || !employee || !employee.employee
   ) : (
     <section className="section" id="employee-profile">
       <div className="profile-container">
@@ -48,57 +48,60 @@ const EmployeeProfile = () => {
       <div className="details-container">
         <h2 className="heading">Bio Data</h2>
         <p>
-          Name <span>{employee.employee.bioData.name}</span>
+          Name <span>{employee && employee.employee.bioData.name}</span>
         </p>
 
         <p>
-          Father Name <span>{employee.employee.bioData.fatherName}</span>
+          Father Name{" "}
+          <span>{employee && employee.employee.bioData.fatherName}</span>
         </p>
 
         <p>
-          CNIC <span>{employee.employee.bioData.cnic}</span>
+          CNIC <span>{employee && employee.employee.bioData.cnic}</span>
         </p>
         <p>
-          Mobile No <span>{employee.employee.bioData.mobile}</span>
+          Mobile No <span>{employee && employee.employee.bioData.mobile}</span>
         </p>
 
         <p>
-          Email <span>{employee.employee.bioData.email}</span>
+          Email <span>{employee && employee.employee.bioData.email}</span>
         </p>
 
         <p>
-          Gender <span>{employee.employee.bioData.gender}</span>
+          Gender <span>{employee && employee.employee.bioData.gender}</span>
         </p>
 
         <p>
-          Date of Birth <span>{employee.employee.bioData.dob.split("T")[0]}</span>
+          Date of Birth{" "}
+          <span>{employee && employee.employee.bioData.dob.split("T")[0]}</span>
         </p>
 
         <p>
-          Marital Status <span>{employee.employee.bioData.maritalStatus}</span>
+          Marital Status{" "}
+          <span>{employee && employee.employee.bioData.maritalStatus}</span>
         </p>
 
         <p>
-          Relegion <span>{employee.employee.bioData.relegion}</span>
+          Relegion <span>{employee && employee.employee.bioData.relegion}</span>
         </p>
 
         <p>
-          Nationality <span>{employee.employee.bioData.nationality}</span>
+          Nationality{" "}
+          <span>{employee && employee.employee.bioData.nationality}</span>
         </p>
-
 
         <h2 className="heading">Job</h2>
 
         <p>
-          Nationality <span>{employee.employee.job.title}</span>
+          Nationality <span>{employee && employee.employee.job.title}</span>
         </p>
 
         <p>
-          Department <span>{employee.employee.job.department}</span>
+          Department <span>{employee && employee.employee.job.department}</span>
         </p>
 
         <p>
-          Salary <span>{employee.employee.job.salary} PKR</span>
+          Salary <span>{employee && employee.employee.job.salary} PKR</span>
         </p>
       </div>
     </section>

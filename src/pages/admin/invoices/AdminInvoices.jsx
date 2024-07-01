@@ -53,7 +53,9 @@ const AdminInvoices = () => {
                   <td>{index + 1}</td>
                   <td>{i.createdAt.split("T")[0]}</td>
                   <td>{i.totalAmount} PKR</td>
-                  <td className="span-td">{i.contract.installements.length}</td>
+                  <td className="span-td">
+                    {i.contract && i.contract.installements.length}
+                  </td>
 
                   <td>{i.paid} PKR</td>
                   <td>{i.outstanding} PKR</td>

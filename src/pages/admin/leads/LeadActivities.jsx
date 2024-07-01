@@ -9,6 +9,7 @@ import { getLeadDetails, getTaskSummary } from "../../../redux/actions/leads";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loader from "../../loader/Loader";
+import AdminRemarks from "../remarks/AdminRemarks";
 const LeadActivities = () => {
   const dispatch = useDispatch();
 
@@ -28,9 +29,6 @@ const LeadActivities = () => {
       ? leads.leads.find((l) => l._id === id)
       : [];
 
-
-      
-  console.log(filteredLead.client.program.documents);
   return loading || !leads ? (
     <Loader />
   ) : (
@@ -64,7 +62,7 @@ const LeadActivities = () => {
       {activity.value === "documents" ? (
         <Documents documents={filteredLead.documents} />
       ) : activity.value === "remarks" ? (
-        <Documents documents={filteredLead.documents} />
+        <AdminRemarks lead={filteredLead._id} />
       ) : (
         ""
       )}

@@ -176,13 +176,19 @@ export const uploadClientProfile = (formdata, id) => async (dispatch) => {
 };
 
 export const updateClientProfile =
-  (cnic, dob, program, email, id) => async (dispatch) => {
+  (cnic, dob, passport, program, email, id) => async (dispatch) => {
     dispatch({ type: "uploadClientProfileRequest" });
 
     try {
       const { data } = await axios.put(
         `${server}/updateclientprofile/${id}`,
-        { cnic: cnic, dob: dob, program: program, email: email },
+        {
+          cnic: cnic,
+          dob: dob,
+          passport: passport,
+          program: program,
+          email: email,
+        },
 
         {
           headers: { "Content-Type": "application/json" },

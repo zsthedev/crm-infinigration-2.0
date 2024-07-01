@@ -10,7 +10,10 @@ const ViewInvoice = () => {
   const pdfRef = useRef();
   const params = useParams();
   const { invoices } = useSelector((state) => state.invoices);
-  const [installement, setInstallement] = useState({ label: "All", value: "all" });
+  const [installement, setInstallement] = useState({
+    label: "All",
+    value: "all",
+  });
 
   const options = {
     filename: "Invoice",
@@ -34,15 +37,15 @@ const ViewInvoice = () => {
 
   const date = new Date();
 
-  const installementOptions =
-    filteredInvoice
-      ? [{ label: "All", value: "all" }].concat(
+  const installementOptions = filteredInvoice
+    ? [{ label: "All", value: "all" }].concat(
+        filteredInvoice.contract &&
           filteredInvoice.contract.installements.map((i) => ({
             label: i.stage,
             value: i._id,
           }))
-        )
-      : [];
+      )
+    : [];
 
   const numberToWords = (num) => {
     const belowTwenty = [
@@ -152,7 +155,9 @@ const ViewInvoice = () => {
         )
       : null;
 
-  const { paid, outstanding, netTotal, grandTotal } = calculateTotals(installement.value);
+  const { paid, outstanding, netTotal, grandTotal } = calculateTotals(
+    installement.value
+  );
 
   return (
     <section className="section">
@@ -205,10 +210,12 @@ const ViewInvoice = () => {
         <div className="bill-to">
           <div>
             <span>Bill To</span>
-            <p className="name">{filteredInvoice.lead.client.name}</p>
+            <p className="name">
+              {filteredInvoice.lead && filteredInvoice.lead.client.name}
+            </p>
             <p className="name">
               <span>Phone: </span>
-              {filteredInvoice.lead.client.phone}
+              {filteredInvoice.lead && filteredInvoice.lead.client.phone}
             </p>
           </div>
 
@@ -228,7 +235,7 @@ const ViewInvoice = () => {
 
               <tr>
                 <th>Sales Person</th>
-                <td>{filteredInvoice.salesPerson.bioData.name}</td>
+                <td>{ filteredInvoice.salesPerson && filteredInvoice.salesPerson.bioData.name}</td>
               </tr>
             </tbody>
           </table>
@@ -256,7 +263,7 @@ const ViewInvoice = () => {
               <td>
                 {filteredInstallement
                   ? filteredInstallement.stage
-                  : filteredInvoice.contract.installements.map((i) => (
+                  : filteredInvoice.contract && filteredInvoice.contract.installements.map((i) => (
                       <p key={i._id}>{i.stage}</p>
                     ))}
               </td>

@@ -24,9 +24,7 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
     dispatch(logout());
   };
 
-
-  const {auth, isAuthenticated} = useSelector(state => state.user)
-
+  const { auth, isAuthenticated } = useSelector((state) => state.user);
 
   const toggleSubLinks = (index) => {
     setSubLinksVisible((prev) => ({
@@ -42,26 +40,29 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
           <div className="nav">
             <img src={logo} className="logo" alt="" />
 
-            
             {navLists && navLists.length > 0
               ? navLists.map((l, index) => (
                   <div className="link-container" key={index}>
                     <Link
                       to={l.value}
                       className={isActive(l.value) ? "active" : ""}
-                      onClick={() => toggleSubLinks(index)}
+                      onClick={l.subLinks ? () => toggleSubLinks(index) : null}
                     >
                       {l.label}
                     </Link>
-                    <ul className={subLinksVisible[index] ? "visible" : "hidden"}>
-                      {l.subLinks && l.subLinks.length > 0
-                        ? l.subLinks.map((sl, subIndex) => (
-                            <li key={subIndex}>
-                              <Link to={sl.value}>{sl.label}</Link>
-                            </li>
-                          ))
-                        : ""}
-                    </ul>
+                    {l.subLinks && (
+                      <ul
+                        className={
+                          subLinksVisible[index] ? "visible" : "hidden"
+                        }
+                      >
+                        {l.subLinks.map((sl, subIndex) => (
+                          <li key={subIndex}>
+                            <Link to={sl.value}>{sl.label}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 ))
               : ""}
@@ -71,7 +72,8 @@ const Sidebar = ({ navLists, component: Component, pageTitle = "" }) => {
               <div className="header">
                 {pageTitle === "" ? (
                   <p>
-                    Greeting! <span> {isAuthenticated && auth.user.bioData.name}</span>
+                    Greeting!{" "}
+                    <span> {isAuthenticated && auth.user.bioData.name}</span>
                   </p>
                 ) : (
                   <p className="heading">{pageTitle}</p>

@@ -18,6 +18,7 @@ const Profiling = ({ client }) => {
   console.log(filteredLead);
   const [cnic, setCnic] = useState(client.cnic);
   const [email, setEmail] = useState(client.email);
+  const [passport, setPassport] = useState(client.passport);
   const [program, setProgram] = useState(client.program);
   const [dob, setDob] = useState(
     client.dob != null ? client.dob.split("T")[0] : ""
@@ -45,7 +46,7 @@ const Profiling = ({ client }) => {
       return toast.error("Invalid CNIC");
     }
 
-    dispatch(updateClientProfile(cnic, dob, program.value, email, params.id));
+    dispatch(updateClientProfile(cnic, dob, passport, program && program.value, email, params.id));
   };
   const { error, loading, message } = useSelector((state) => state.leads);
 
@@ -90,9 +91,19 @@ const Profiling = ({ client }) => {
           <label htmlFor="">Email</label>
           <input
             type="text"
-            placeholder="Enter Date of Birth"
+            placeholder="Enter Client Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="la">
+          <label htmlFor="">Passport No</label>
+          <input
+            type="text"
+            placeholder="Enter Passport No"
+            value={passport}
+            onChange={(e) => setPassport(e.target.value)}
           />
         </div>
 

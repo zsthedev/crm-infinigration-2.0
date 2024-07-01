@@ -38,9 +38,9 @@ const Contracts = () => {
             ? contracts.contracts.map((c, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{c.lead.client.name}</td>
+                  <td>{c.lead && c.lead.client.name}</td>
                   <td>{c.createdAt.split("T")[0]}</td>
-                  <td>{c.lead.status}</td>
+                  <td>{c.lead && c.lead.status}</td>
                   <td>
                     {c.program.generalInformation[0].totalCost} Lacs (PKR)
                   </td>

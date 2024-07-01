@@ -6,6 +6,7 @@ import { programReducer } from "./reducers/programReducer";
 import { contractReducer } from "./reducers/contractReducer";
 import { invoiceReducer } from "./reducers/invoiceReducer";
 import { remarkReducer } from "./reducers/remarksReducer";
+import { clientReducer } from "./reducers/clientReducer";
 
 export const server = "https://infinigration-crm-backend.onrender.com/api/v1";
 export const store = configureStore({
@@ -17,5 +18,6 @@ export const store = configureStore({
     contract: contractReducer,
     invoices: invoiceReducer,
     remarks: remarkReducer,
+    clients: clientReducer,
   },
 });

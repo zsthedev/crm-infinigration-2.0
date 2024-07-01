@@ -12,6 +12,9 @@ $dark-color: #363636;
 $text-color: #828282;
 $transparent-accent-color: #4364b72f;
 $red: #a71021;
+body{
+    background-color: $light-color;
+}
 .section {
     width: 100%;
 }

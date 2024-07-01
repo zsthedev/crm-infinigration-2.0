@@ -51,6 +51,7 @@ import {
 } from "./utils/routes";
 import { createLead } from "./redux/actions/leads";
 import Remarks from "./pages/employees/Remarks/Remarks";
+import AdminClients from "./pages/admin/clients/AdminClients";
 
 const App = () => {
   const locomotiveScroll = new LocomotiveScroll();
@@ -457,6 +458,26 @@ const App = () => {
             }
           />
 
+          <Route
+            path="/admin/clients"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
+                  component={AdminClients}
+                  pageTitle="Clients"
+                />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/admin/program/:id"
             element={

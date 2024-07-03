@@ -9,10 +9,7 @@ export const routes = [
     value: "/admin/contracts",
     label: "Contracts",
   },
-  {
-    value: "/admin/invoices",
-    label: "Invoices",
-  },
+
   {
     value: "/admin/programs",
     label: "Programs",
@@ -21,6 +18,10 @@ export const routes = [
     value: "/admin/finances",
     label: "Finance",
     subLinks: [
+      {
+        value: "/admin/invoices",
+        label: "Invoices",
+      },
       {
         value: "/admin/finances/payments-received",
         label: "Payments Received",

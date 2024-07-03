@@ -41,7 +41,7 @@ const FilteredLeads = ({ date, delay, employee }) => {
       .filter((e) => e._id !== auth.user._id)
       .map((e) => ({
         value: e._id,
-        label: `${e.bioData.name} (${e.job.department})`,
+        label: `${e.bioData && e.bioData.name} (${e.job && e.job.department})`,
       }));
 
   console.log(forwardLeadOptions);
@@ -75,13 +75,14 @@ const FilteredLeads = ({ date, delay, employee }) => {
                 .filter(
                   (f) =>
                     f.createdAt.split("T")[0] === date ||
-                    f.assignedTo._id.toString() === employee.value
+                    (f.assignedTo &&
+                      f.assignedTo._id.toString() === employee.value)
                 )
                 .map((l, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{l.client.name}</td>
-                    <td>{l.client.program.generalInformation[0].country}</td>
+                    <td>{l.client.program && l.client.program.generalInformation[0].country}</td>
                     <td>{l.createdAt.split("T")[0]}</td>
                     <td>Nill</td>
                     <td>{l.status}</td>

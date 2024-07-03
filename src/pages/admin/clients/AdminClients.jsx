@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllClients } from "../../../redux/actions/clients";
 import "./admin.scss"; // Make sure to import the CSS file
+import { Link } from "react-router-dom";
 
 const AdminClients = () => {
   const dispatch = useDispatch();
@@ -12,9 +13,19 @@ const AdminClients = () => {
 
   const { loading, clients } = useSelector((state) => state.clients);
 
-  console.log(clients);
   return (
     <section className="section" id="admin_clients">
+      <div className={"actions-row"}>
+        {/* <div>
+              <input type="text" placeholder="Search by Name" />
+            </div> */}
+
+        <div>
+          <Link className="primary-btn" to={"/admin/clients/add"}>
+            Add Clients
+          </Link>
+        </div>
+      </div>
       <table>
         <thead>
           <tr>
@@ -22,15 +33,9 @@ const AdminClients = () => {
             <th>Subagent</th>
             <th>Signing Date</th>
             <th>Name</th>
-            <th>Contract ID</th>
-            <th>Month</th>
             <th>TTL Amount</th>
-            <th>2nd INST</th>
-            <th>3rd INST</th>
-            <th>MOP</th>
+
             <th>Psp No</th>
-            <th>Passport Validity</th>
-            <th>Nationality</th>
             <th>Email</th>
             <th>Remarks</th>
             <th>Contact No</th>
@@ -47,15 +52,9 @@ const AdminClients = () => {
                   <td>{c.subAgent}</td>
                   <td>{c.signingDate.split("T")[0]}</td>
                   <td>{c.name}</td>
-                  <td>{c.contractNo}</td>
-                  <td>{c.month}</td>
                   <td>{c.ttlAmount} PKR</td>
-                  <td>{c.ttlAmount} PKR</td>
-                  <td>{c.ttlAmount} PKR</td>
-                  <td>{c.mop}</td>
+
                   <td>{c.passport}</td>
-                  <td>{c.passportValidity}</td>
-                  <td>{c.nationality}</td>
                   <td>{c.email}</td>
                   <td>{c.remarks}</td>
                   <td>{c.contactNo}</td>

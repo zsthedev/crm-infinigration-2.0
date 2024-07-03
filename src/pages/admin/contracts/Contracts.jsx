@@ -28,7 +28,8 @@ const Contracts = () => {
             <th>Name</th>
             <th>Date</th>
             <th>Stage</th>
-            <th>Value</th>
+            <th>Status</th>
+            <th>Total Amount</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -40,6 +41,7 @@ const Contracts = () => {
                   <td>{index + 1}</td>
                   <td>{c.lead && c.lead.client.name}</td>
                   <td>{c.createdAt.split("T")[0]}</td>
+                  <td>{c.lead && c.lead.status}</td>
                   <td>{c.lead && c.lead.status}</td>
                   <td>
                     {c.program.generalInformation[0].totalCost} Lacs (PKR)

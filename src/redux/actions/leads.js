@@ -207,7 +207,7 @@ export const updateClientProfile =
 
 export const uploadClientDocuments =
   (formdata, lId, dId) => async (dispatch) => {
-    dispatch({ type: "uploadClientDocumentRequest" });
+    dispatch({ type: "uploadClientProfileRequest" });
 
     try {
       const { data } = await axios.put(
@@ -220,10 +220,10 @@ export const uploadClientDocuments =
         }
       );
 
-      dispatch({ type: "uploadClientDocumentSuccess", payload: data });
+      dispatch({ type: "uploadClientProfileSuccess", payload: data });
     } catch (error) {
       dispatch({
-        type: "uploadClientDocumentFail",
+        type: "uploadClientProfileFail",
         payload: error.response.data.message,
       });
     }

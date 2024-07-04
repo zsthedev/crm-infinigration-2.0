@@ -67,7 +67,7 @@ export const updateLeadStatus = (id, status) => async (dispatch) => {
   try {
     const { data } = await axios.put(
       `${server}/updateleadstatus`,
-      { id, status },
+      { id, status: status },
 
       {
         headers: { "Content-Type": "application/json" },

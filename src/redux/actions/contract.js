@@ -8,7 +8,7 @@ export const createContract =
     try {
       const { data } = await axios.post(
         `${server}/create_contract`,
-        { lead, program, installements },
+        { lead, program, installements},
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,

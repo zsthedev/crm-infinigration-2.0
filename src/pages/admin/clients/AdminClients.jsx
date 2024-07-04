@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllClients } from "../../../redux/actions/clients";
 import "./admin.scss"; // Make sure to import the CSS file
 import { Link } from "react-router-dom";
-
+import Select from "react-select";
 const AdminClients = () => {
   const dispatch = useDispatch();
 
@@ -34,8 +34,6 @@ const AdminClients = () => {
             <th>Signing Date</th>
             <th>Name</th>
             <th>TTL Amount</th>
-
-            <th>Psp No</th>
             <th>Email</th>
             <th>Remarks</th>
             <th>Contact No</th>
@@ -54,12 +52,18 @@ const AdminClients = () => {
                   <td>{c.name}</td>
                   <td>{c.ttlAmount} PKR</td>
 
-                  <td>{c.passport}</td>
                   <td>{c.email}</td>
                   <td>{c.remarks}</td>
                   <td>{c.contactNo}</td>
                   <td>{c.status}</td>
-                  <td>{c.action}</td>
+                  <td>
+                    <Link>Activites</Link>
+                    <Link>View Contract</Link>
+                    <Link>View Invoice</Link>
+                    <form action="">
+                      <Select placeholder="Choose Status" />
+                    </form>
+                  </td>
                 </tr>
               ))
             : ""}

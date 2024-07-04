@@ -67,7 +67,7 @@ const CreateContract = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(lead.value, program.value, installments)
+    console.log(lead.value, program.value, installments);
     dispatch(createContract(lead.value, program.value, installments));
   };
 

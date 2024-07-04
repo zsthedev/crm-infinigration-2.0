@@ -37,3 +37,23 @@
     font-weight: 550;
 }
 }
+
+
+.c-actions{
+  display: flex;
+  flex-direction: column;
+
+  div{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  form{
+  >button{
+    margin-top: 5px;
+  }  
+  }
+
+  
+}

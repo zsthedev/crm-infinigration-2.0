@@ -41,5 +41,13 @@ export const programReducer = createReducer(
       state.loading = false;
       state.error = action.payload;
     },
+
+    clearMessage: (state) => {
+      state.message = null;
+    },
+
+    clearError: (state) => {
+      state.error = null;
+    },
   }
 );

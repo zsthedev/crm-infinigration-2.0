@@ -53,6 +53,7 @@ import { createLead } from "./redux/actions/leads";
 import Remarks from "./pages/employees/Remarks/Remarks";
 import AdminClients from "./pages/admin/clients/AdminClients";
 import AddClients from "./pages/admin/clients/AddClients";
+import UpdateProgram from "./pages/admin/programs/UpdateProgram";
 
 const App = () => {
   const locomotiveScroll = new LocomotiveScroll();
@@ -454,6 +455,27 @@ const App = () => {
                   }
                   component={Programs}
                   pageTitle="Programs"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/program/:id/update"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
+                  component={UpdateProgram}
+                  pageTitle="Update Program"
                 />
               </ProtectedRoute>
             }

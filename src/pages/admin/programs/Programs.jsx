@@ -12,7 +12,7 @@ const Programs = () => {
     dispatch(getAllPrograms());
   }, [error, message]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return loading ? (
     <Loader />
   ) : (
@@ -40,17 +40,15 @@ const Programs = () => {
                 <tr>
                   <td>{index + 1}</td>
                   <td>{p.generalInformation[0].country}</td>
-                  <td>{p.generalInformation[0].totalCost} Lacs</td>
+                  <td>{p.generalInformation[0].totalCost}</td>
                   <td>{p.status}</td>
                   <td>{p.generalInformation[0].processDuration} Months</td>
                   <td className="actions">
-                    <button
-                      onClick={() => navigate(`/admin/program/${p._id}`)}
-                    >
+                    <button onClick={() => navigate(`/admin/program/${p._id}`)}>
                       View
                     </button>
                     <button>Disable</button>
-                    <button>Update</button>
+                    <Link to={`/admin/program/${p._id}/update`}>Update</Link>
                   </td>
                 </tr>
               ))

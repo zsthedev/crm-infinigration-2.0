@@ -16,6 +16,19 @@ export const programReducer = createReducer(
       state.error = action.payload;
     },
 
+    updateProgramRequest: (state) => {
+      state.loading = true;
+    },
+
+    updateProgramSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    updateProgramFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     getAllProgramsRequest: (state) => {
       state.loading = true;
     },

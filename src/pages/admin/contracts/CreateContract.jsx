@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { getAllPrograms } from "../../../redux/actions/program";
@@ -18,12 +17,14 @@ const CreateContract = () => {
   useEffect(() => {
     dispatch(getAllPrograms());
     dispatch(getAllLeads());
-  }, []);
+  }, [dispatch]);
 
   const { leads } = useSelector((state) => state.leads);
   const { programs } = useSelector((state) => state.program);
+  const { loading, message, error } = useSelector((state) => state.contract);
 
   const params = useParams();
+  const navigate = useNavigate();
 
   const [program, setProgram] = useState(
     leads && leads.leads.length > 0 && params.id !== undefined
@@ -53,6 +54,11 @@ const CreateContract = () => {
     setInstallments([...installments, { amount: "", stage: "", remarks: "" }]);
   };
 
+  const handleRemoveInstallment = (index) => {
+    const newInstallments = installments.filter((_, i) => i !== index);
+    setInstallments(newInstallments);
+  };
+
   const handleInstallmentChange = (index, field, value) => {
     const newInstallments = [...installments];
     newInstallments[index][field] = value;
@@ -61,10 +67,9 @@ const CreateContract = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log(lead.value, program.value, installments);
     dispatch(createContract(lead.value, program.value, installments));
   };
-
-  const { loading, message, error } = useSelector((state) => state.contract);
 
   const leadOptions =
     leads && leads.leads.length > 0
@@ -72,16 +77,16 @@ const CreateContract = () => {
           value: l._id,
           label: l.client.name,
         }))
-      : "";
+      : [];
 
   const programOptions =
     programs && programs.length > 0
-      ? programs.map((l) => ({
-          value: l._id,
-          label: l.generalInformation[0].country,
+      ? programs.map((p) => ({
+          value: p._id,
+          label: p.generalInformation[0].country,
         }))
-      : "";
-  const navigate = useNavigate();
+      : [];
+
   useEffect(() => {
     if (message) {
       toast.success(message);
@@ -98,7 +103,7 @@ const CreateContract = () => {
         type: "clearError",
       });
     }
-  }, [error, message]);
+  }, [error, message, dispatch, navigate]);
 
   return loading ? (
     <Loader />
@@ -121,7 +126,7 @@ const CreateContract = () => {
           defaultValue={program}
         />
         <h2 className="heading">Installments</h2>
-        <div className="installements-container">
+        <div className="installments-container">
           <button
             type="button"
             className="primary-btn"
@@ -154,6 +159,13 @@ const CreateContract = () => {
                   handleInstallmentChange(index, "remarks", e.target.value)
                 }
               />
+              <button
+                type="button"
+                className="danger-btn"
+                onClick={() => handleRemoveInstallment(index)}
+              >
+                Remove
+              </button>
             </div>
           ))}
         </div>

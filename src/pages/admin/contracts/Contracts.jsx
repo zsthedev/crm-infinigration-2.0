@@ -27,8 +27,8 @@ const Contracts = () => {
             <th>Sr</th>
             <th>Name</th>
             <th>Date</th>
-            <th>Stage</th>
             <th>Status</th>
+            <th>Signing Date</th>
             <th>Total Amount</th>
             <th>Actions</th>
           </tr>
@@ -42,13 +42,14 @@ const Contracts = () => {
                   <td>{c.lead && c.lead.client.name}</td>
                   <td>{c.createdAt.split("T")[0]}</td>
                   <td>{c.lead && c.lead.status}</td>
-                  <td>{c.lead && c.lead.status}</td>
+                  <td>{c.signingDate || "Not Signed"}</td>
                   <td>
                     {c.program.generalInformation[0].totalCost} Lacs (PKR)
                   </td>
                   <td className="actions">
                     <Link to={`/admin/contract/${c._id}`}>View</Link>
                     <Link to={`/admin/invoices/add/${c._id}`}>Convert to Invoice</Link>
+                    <button>Mark as Signed</button>
                   </td>
                 </tr>
               ))

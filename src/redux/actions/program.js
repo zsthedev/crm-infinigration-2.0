@@ -76,3 +76,58 @@ export const getAllPrograms = () => async (dispatch) => {
     });
   }
 };
+
+export const updateProgram =
+  (
+    id,
+    country,
+    duration,
+    totalCost,
+    advance,
+    workPermit,
+    passportRequest,
+    visaCost,
+    deduction,
+    province,
+    processDuration,
+    jobs,
+    documents,
+    requirements,
+    benefits
+  ) =>
+  async (dispatch) => {
+    dispatch({ type: "updateProgramRequest" });
+
+    try {
+      const { data } = await axios.put(
+        `${server}/updateprogram/${id}`,
+        {
+          country,
+          duration,
+          totalCost,
+          advance,
+          workPermit,
+          passportRequest,
+          visaCost,
+          deduction,
+          province,
+          processDuration,
+          jobs,
+          documents,
+          requirements,
+          benefits,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      dispatch({ type: "updateProgramSuccess", payload: data });
+    } catch (error) {
+      dispatch({
+        type: "updateProgramFail",
+        payload: error.response.data.message,
+      });
+    }
+  };

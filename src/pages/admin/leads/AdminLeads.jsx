@@ -14,6 +14,7 @@ import Loader from "../../loader/Loader";
 import toast from "react-hot-toast";
 import { getEmployees } from "../../../redux/actions/admin";
 import FilteredLeads from "../../../componets/filter leads/FilteredLeads";
+import { getProcess } from "../../../redux/actions/process";
 
 const AdminLeads = () => {
   const [isOpen, setOpen] = useState(false);
@@ -67,14 +68,18 @@ const AdminLeads = () => {
         .filter((e) => e._id !== auth.user._id)
         .map((e) => ({
           value: e._id,
-          label: `${e.bioData && e.bioData.name}, (${e.job && e.job.department})`,
+          label: `${e.bioData && e.bioData.name}, (${
+            e.job && e.job.department
+          })`,
         }))
     : [];
 
   const updateStatusHandler = (e) => {
     e.preventDefault();
     const id = e.target.id;
-    dispatch(updateLeadStatus(id, status.value));
+    dispatch(updateLeadStatus(id, status.value.toString()));
+
+    console.log(id, status.value.toString());
   };
 
   const assignSubmitHandler = (e) => {
@@ -82,6 +87,19 @@ const AdminLeads = () => {
 
     dispatch(assignLead(e.target.id, forward.value));
   };
+  const { process } = useSelector((state) => state.process);
+
+  useEffect(() => {
+    dispatch(getProcess());
+  }, []);
+
+  let processOptions =
+    process &&
+    process[0] &&
+    process[0].lead_process.map((p) => ({
+      label: p.title,
+      value: p.title,
+    }));
 
   return loading || !leads || !leads.leads ? (
     <Loader /> || !employees
@@ -133,7 +151,11 @@ const AdminLeads = () => {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{l.client.name}</td>
-                      <td>{l.client.program ? l.client.program.generalInformation[0].country : "Not Selected Yet"}</td>
+                      <td>
+                        {l.client.program
+                          ? l.client.program.generalInformation[0].country
+                          : "Not Selected Yet"}
+                      </td>
                       <td>{l.createdAt.split("T")[0]}</td>
                       <td>{l.client.campaign}</td>
                       <td>{l.client.city}</td>
@@ -163,7 +185,7 @@ const AdminLeads = () => {
                             placeholder="Change Status"
                             value={status}
                             onChange={setStatus}
-                            options={statusOptions}
+                            options={processOptions}
                             defaultValue={status}
                           />
                           <button>Apply</button>

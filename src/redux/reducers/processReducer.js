@@ -20,14 +20,14 @@ export const processReducer = createReducer(
       state.loading = true;
     },
 
-    getAllProgramsRequest: (state, action) => {
+    getAllProcessRequest: (state, action) => {
       state.loading = true;
     },
-    getAllProgramsSuccess: (state, action) => {
+    getAllProcessSuccess: (state, action) => {
       state.loading = false;
       state.process = action.payload.process;
     },
-    getAllProgramsFail: (state, action) => {
+    getAllProcessFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

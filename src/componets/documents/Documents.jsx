@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./documents.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadClientDocuments } from "../../redux/actions/leads";
+import { getAllLeads, uploadClientDocuments } from "../../redux/actions/leads";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../../pages/loader/Loader";
 import toast from "react-hot-toast";
@@ -27,11 +27,8 @@ const Documents = ({ documents }) => {
     };
 
     const myForm = new FormData();
-    myForm.append("file", file); // Use 'file' instead of 'avatar'
+    myForm.append("file", file);
     dispatch(uploadClientDocuments(myForm, params.id, id));
-    console.log(file);
-    console.log(params.id);
-    console.log(id);
   };
 
   const { loading, error, message } = useSelector((state) => state.leads);
@@ -44,6 +41,7 @@ const Documents = ({ documents }) => {
     if (message) {
       toast.success(message);
       dispatch({ type: "clearMessage" });
+      dispatch(getAllLeads());
     }
   }, [error, loading, message]);
 
@@ -83,7 +81,9 @@ const Documents = ({ documents }) => {
                         <button onClick={handleFileUpload}>Upload</button>
                       </div>
                     ) : (
-                      <Link to={d.file.url} target="_blank">View</Link>
+                      <Link to={d.file.url} target="_blank">
+                        View
+                      </Link>
                     )}
                     {/* <button>Approve</button>
                     <button>Decline</button> */}

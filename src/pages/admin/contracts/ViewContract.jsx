@@ -3,6 +3,7 @@ import logo from "../../../assets/logo.png";
 import generatePDF from "react-to-pdf";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Loader from "../../loader/Loader";
 
 const ViewContract = () => {
   const pdfRef = useRef();
@@ -17,10 +18,11 @@ const ViewContract = () => {
   console.log(contract);
   const options = {
     filename:
+      contract.lead &&
       contract.lead.client.name +
-      " " +
-      contract.program.generalInformation[0].country +
-      " Contract",
+        " " +
+        contract.program.generalInformation[0].country +
+        " Contract",
     image: { type: "jpeg", quality: 1 },
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: "in", orientation: "portrait" },
@@ -45,7 +47,9 @@ const ViewContract = () => {
       .replace(/\//g, "-");
   };
 
-  return (
+  return !contract.lead || !contract.program ? (
+    <Loader />
+  ) : (
     <section className="section" id="view-contract">
       <div className="actions-row">
         <button className="primary-btn" onClick={downloadPdf}>

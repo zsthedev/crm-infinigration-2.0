@@ -23,13 +23,6 @@ const Settings = () => {
           </tr>
 
           <tr>
-            <td>02</td>
-            <td>Abroad Questions</td>
-            <td>
-              <Link to={"abroad-questions"}>View</Link>
-            </td>
-          </tr>
-          <tr>
             <td>03</td>
             <td>Leads Setting</td>
             <td>
@@ -39,17 +32,17 @@ const Settings = () => {
 
           <tr>
             <td>04</td>
-            <td>Triggers</td>
+            <td>Vendors</td>
             <td>
-              <Link>View</Link>
+              <Link to={"/admin/vendors"}>View</Link>
             </td>
           </tr>
 
           <tr>
-            <td>05</td>
-            <td>Abroad Forms</td>
+            <td>03</td>
+            <td>Sub Agents</td>
             <td>
-              <Link>View</Link>
+              <Link to={"leads"}>View</Link>
             </td>
           </tr>
         </tbody>

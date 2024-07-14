@@ -54,6 +54,7 @@ import Remarks from "./pages/employees/Remarks/Remarks";
 import AdminClients from "./pages/admin/clients/AdminClients";
 import AddClients from "./pages/admin/clients/AddClients";
 import UpdateProgram from "./pages/admin/programs/UpdateProgram";
+import Vendor from "./pages/admin/settings/vendors/Vendor";
 
 const App = () => {
   const locomotiveScroll = new LocomotiveScroll();
@@ -814,6 +815,25 @@ const App = () => {
                   navLists={routes}
                   component={AddNewProgram}
                   pageTitle="Create New Program"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/vendors"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={Vendor}
+                  pageTitle="Vendors"
                 />
               </ProtectedRoute>
             }

@@ -28,13 +28,13 @@ export const routes = [
       },
 
       {
-        value: "/admin/finances/credit-notes",
-        label: "Credit Notes",
+        value: "/admin/finances/expense",
+        label: "Expenses",
       },
 
       {
-        value: "/admin/finances/expense",
-        label: "Expenses",
+        value: "/admin/finances/credit-notes",
+        label: "Credit Notes",
       },
 
       {
@@ -50,6 +50,11 @@ export const routes = [
       {
         value: "/admin/finances/vendor-credits",
         label: "Vendor Credits",
+      },
+
+      {
+        value: "/admin/finances/vendor-payments",
+        label: "Vendor Payments",
       },
     ],
   },

@@ -55,6 +55,7 @@ import AdminClients from "./pages/admin/clients/AdminClients";
 import AddClients from "./pages/admin/clients/AddClients";
 import UpdateProgram from "./pages/admin/programs/UpdateProgram";
 import Vendor from "./pages/admin/settings/vendors/Vendor";
+import VendorPayments from "./pages/admin/finances/VendorPayments";
 
 const App = () => {
   const locomotiveScroll = new LocomotiveScroll();
@@ -834,6 +835,25 @@ const App = () => {
                   navLists={routes}
                   component={Vendor}
                   pageTitle="Vendors"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/vendor-payments"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={VendorPayments}
+                  pageTitle="Vendor Payments"
                 />
               </ProtectedRoute>
             }

@@ -2,13 +2,20 @@ import axios from "axios";
 import { server } from "../store";
 
 export const createContract =
-  (lead, program, installements) => async (dispatch) => {
+  (lead, program, installements, vendor, vendorPercentage) =>
+  async (dispatch) => {
     dispatch({ type: "createContractRequest" });
 
     try {
       const { data } = await axios.post(
         `${server}/create_contract`,
-        { lead, program, installements},
+        {
+          lead,
+          program,
+          installements,
+          vendor,
+          vendorPercentage,
+        },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,

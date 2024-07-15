@@ -7,6 +7,7 @@ import { createContract } from "../../../redux/actions/contract";
 import Loader from "../../loader/Loader";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import { getAllVendors } from "../../../redux/actions/vendor";
 
 const CreateContract = () => {
   const [installments, setInstallments] = useState([
@@ -50,6 +51,18 @@ const CreateContract = () => {
       : []
   );
 
+  useEffect(() => {
+    dispatch(getAllVendors());
+  }, []);
+
+  const { vendors } = useSelector((state) => state.vendor);
+
+  const [vendor, setVendor] = useState("");
+  const [subAgent, setSubAgent] = useState("");
+
+  const [vendorPercentage, setVendorPercentage] = useState("");
+  const [subAgentPercentage, setSubAgentPercentage] = useState("");
+
   const handleAddInstallment = () => {
     setInstallments([...installments, { amount: "", stage: "", remarks: "" }]);
   };
@@ -67,8 +80,24 @@ const CreateContract = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(lead.value, program.value, installments);
-    dispatch(createContract(lead.value, program.value, installments));
+
+    dispatch(
+      createContract(
+        lead.value,
+        program.value,
+        installments,
+        vendor.value,
+        vendorPercentage
+      )
+    );
+
+    console.log(
+      lead.value,
+      program.value,
+      installments,
+      vendor.value,
+      vendorPercentage
+    );
   };
 
   const leadOptions =
@@ -78,6 +107,15 @@ const CreateContract = () => {
           label: l.client.name,
         }))
       : [];
+
+  const vendorOptions =
+    vendors && vendors.length > 0
+      ? vendors.map((v, index) => ({
+          value: v._id,
+          label: v.name,
+        }))
+      : [];
+  const subAgentOptions = [];
 
   const programOptions =
     programs && programs.length > 0
@@ -125,6 +163,34 @@ const CreateContract = () => {
           value={program}
           defaultValue={program}
         />
+
+        <Select
+          placeholder="Choose Vendor"
+          options={vendorOptions}
+          onChange={setVendor}
+          value={vendor}
+          defaultValue={vendor}
+        />
+        <input
+          type="text"
+          placeholder="Vendor Percentage"
+          value={vendorPercentage}
+          onChange={(e) => setVendorPercentage(e.target.value)}
+        />
+        <Select
+          placeholder="Choose SubAgent"
+          options={subAgentOptions}
+          onChange={setSubAgent}
+          value={subAgent}
+          defaultValue={subAgent}
+        />
+        <input
+          type="text"
+          placeholder="Subagent Percentage"
+          value={subAgentPercentage}
+          onChange={(e) => setSubAgentPercentage(e.target.value)}
+        />
+
         <h2 className="heading">Installments</h2>
         <div className="installments-container">
           <button

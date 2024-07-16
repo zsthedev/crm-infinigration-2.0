@@ -137,3 +137,15 @@
     }
   }
 }
+
+#add-new-bank{
+  form{
+    width: 100%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

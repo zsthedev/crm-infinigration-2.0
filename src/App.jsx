@@ -56,6 +56,8 @@ import AddClients from "./pages/admin/clients/AddClients";
 import UpdateProgram from "./pages/admin/programs/UpdateProgram";
 import Vendor from "./pages/admin/settings/vendors/Vendor";
 import VendorPayments from "./pages/admin/finances/VendorPayments";
+import Banks from "./pages/admin/finances/Banks";
+import AddNewBank from "./pages/admin/finances/AddNewBank";
 
 const App = () => {
   const locomotiveScroll = new LocomotiveScroll();
@@ -559,8 +561,50 @@ const App = () => {
                   navLists={
                     isAuthenticated && user.role === "admin" ? routes : ""
                   }
+                  component={Banks}
+                  pageTitle="Banks"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/bank/new"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
+                  component={AddNewBank}
+                  pageTitle="Create New Bank"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/bank/:id"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={
+                    isAuthenticated && user.role === "admin" ? routes : ""
+                  }
                   component={AdminFinances}
-                  pageTitle="Finances"
+                  pageTitle="Bank Dashboard"
                 />
               </ProtectedRoute>
             }

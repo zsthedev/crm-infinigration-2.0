@@ -22,6 +22,11 @@ export const routes = [
         value: "/admin/invoices",
         label: "Invoices",
       },
+
+      {
+        value: "/admin/finances/incomings",
+        label: "Incomings",
+      },
       {
         value: "/admin/finances/payments-received",
         label: "Payments Received",
@@ -55,6 +60,11 @@ export const routes = [
       {
         value: "/admin/finances/vendor-payments",
         label: "Vendor Payments",
+      },
+
+      {
+        value: "/admin/finances/payrolls",
+        label: "Employee Payrolls",
       },
     ],
   },

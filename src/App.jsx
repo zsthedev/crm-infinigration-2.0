@@ -58,6 +58,8 @@ import Vendor from "./pages/admin/settings/vendors/Vendor";
 import VendorPayments from "./pages/admin/finances/VendorPayments";
 import Banks from "./pages/admin/finances/Banks";
 import AddNewBank from "./pages/admin/finances/AddNewBank";
+import EmployeePayroll from "./pages/admin/finances/EmployeePayroll";
+import Incomings from "./pages/admin/finances/Incomings";
 
 const App = () => {
   const locomotiveScroll = new LocomotiveScroll();
@@ -727,6 +729,44 @@ const App = () => {
                   navLists={routes}
                   component={CreditNotes}
                   pageTitle="Vendor Credits"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/payrolls"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={EmployeePayroll}
+                  pageTitle="Employee Payrolls"
+                />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/finances/incomings"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                adminRoute={true}
+                isAdmin={user && user.role === "admin"}
+                redirect="/"
+                redirectAdmin="/"
+              >
+                <Sidebar
+                  navLists={routes}
+                  component={Incomings}
+                  pageTitle="Incomings"
                 />
               </ProtectedRoute>
             }

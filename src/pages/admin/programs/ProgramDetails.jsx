@@ -98,7 +98,7 @@ const ProgramDetails = () => {
       <div className="general-information">
         <h2>Benefits</h2>
 
-        {filteredProgram.benifits && filteredProgram.benifits.map((j) => (
+        {filteredProgram.benefits && filteredProgram.benefits.map((j) => (
           <div className="feild">
             <h3>{j.title}</h3>
           </div>

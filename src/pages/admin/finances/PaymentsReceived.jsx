@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Select from "react-select";
+import CustomSelect from "../../../componets/CustomSelect/CustomSelect";
 const PaymentsReceived = () => {
   return (
     <section className="section" id="payments-received">
       <div className="actions-row">
-        <Link className="primary-btn" to={""}>Add New</Link>
+        <CustomSelect placeholder="Choose Bank Account"></CustomSelect>
+        <Link className="primary-btn" to={""}>
+          Add New
+        </Link>
       </div>
 
       <table>

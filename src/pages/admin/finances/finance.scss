@@ -149,3 +149,17 @@
     gap: 10px;
   }
 }
+
+#payments-received{
+  .actions-row{
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+
+#incomings{
+  .actions-row{
+    justify-content: flex-start;
+  }
+}

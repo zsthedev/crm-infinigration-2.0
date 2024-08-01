@@ -12,7 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.6.7",
-    "chart.js": "^4.4.2",
+    "chart.js": "^4.4.3",
     "dropzone": "^6.0.0-beta.2",
     "framer-motion": "^11.0.5",
     "fs": "^0.0.1-security",
@@ -20,6 +20,7 @@
     "lottie-react": "^2.4.0",
     "protected-route-react": "^1.0.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.1",

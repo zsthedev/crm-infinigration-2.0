@@ -44,7 +44,7 @@ const Contracts = () => {
                   <td>{c.lead && c.lead.status}</td>
                   <td>{c.signingDate || "Not Signed"}</td>
                   <td>
-                    {c.program.generalInformation[0].totalCost} Lacs (PKR)
+                    {c.program.generalInformation[0].totalCost} (PKR)
                   </td>
                   <td className="actions">
                     <Link to={`/admin/contract/${c._id}`}>View</Link>

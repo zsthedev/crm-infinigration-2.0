@@ -3,25 +3,42 @@ import "./finance.scss";
 import FStats from "../../../componets/finance/FStats";
 import { FaWallet } from "react-icons/fa6";
 import card from "../../../assets/card.png";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import AccountStats from "../../../componets/charts/Chart";
 const AdminFinances = () => {
+  const params = useParams();
+  const { banks } = useSelector((state) => state.bank);
+  const selectedBank =
+    banks && banks.length > 0 ? banks.find((b) => b._id == params.id) : {};
+
   return (
     <section className="section" id="admin-finance">
       <div className="container">
         <div className="stats">
           <div className="stats-row">
-            <FStats icon={FaWallet} title={"Balance"} number={"2000"} />
-            <FStats icon={FaWallet} title={"Incoming"} number={"4000"} />
-            <FStats icon={FaWallet} title={"Expense"} number={"8000"} />
-            <FStats icon={FaWallet} title={"Profit"} number={"10000"} />
+            <FStats
+              icon={FaWallet}
+              title={"Balance"}
+              number={selectedBank.stats.balance}
+            />
+            <FStats
+              icon={FaWallet}
+              title={"Incoming"}
+              number={selectedBank.stats.incoming}
+            />
+            <FStats
+              icon={FaWallet}
+              title={"Expense"}
+              number={selectedBank.stats.expense}
+            />
+            <FStats
+              icon={FaWallet}
+              title={"Profit"}
+              number={selectedBank.stats.profit}
+            />
           </div>
-
-          <div className="charts">
-            <div className="line-chart">
-              <p>Income & Outcome Line Chart</p>
-            </div>
-            <div className="pie-chart">Expenses Pie Chart</div>
-          </div>
-
+          <AccountStats account={selectedBank} />;
           <div className="transactions">
             <h2 className="heading">Transactions</h2>
             <table>

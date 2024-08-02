@@ -3,8 +3,9 @@ import FilterLeads from "../../../componets/filter leads/FilterLeads";
 import AdminData from "../../../componets/admin data/AdminData";
 import "./admin-dashboard.scss";
 import FilteredLeads from "../../../componets/filter leads/FilteredLeads";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllLeads } from "../../../redux/actions/leads";
+import { getDashboardStats } from "../../../redux/actions/other";
 
 const AdminDashboard = () => {
   const [date, setDate] = useState("");
@@ -15,9 +16,13 @@ const AdminDashboard = () => {
   console.log(employee);
   console.log(delay);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllLeads());
+    dispatch(getDashboardStats());
   }, []);
+
+  const { stats } = useSelector((state) => state.other);
   return (
     <section className="section" id="admin-dashboard">
       <FilterLeads
@@ -33,71 +38,11 @@ const AdminDashboard = () => {
         <FilteredLeads date={date} delay={delay} employee={employee} />
       ) : (
         <div className="admin-data-row">
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Total Leads"}
-            number={"07"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Pending Leads"}
-            number={"03"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Pending Tasks"}
-            number={"03"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Unread Communications"}
-            number={"0"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Total Profiles"}
-            number={"02"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Under Review Documents"}
-            number={"05"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Followup"}
-            number={"01"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Recommendations Given"}
-            number={"05"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Documents Pending"}
-            number={"10"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Document Submitted"}
-            number={"06"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Application Submitted"}
-            number={"03"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Offer Letter"}
-            number={"05"}
-          />
-          <AdminData
-            link={"/admin/leads/filtered"}
-            description={"Visa Process Started"}
-            number={"15"}
-          />
+          {stats && stats.length > 0
+            ? stats.map((s) => (
+                <AdminData link={""} description={s.title} number={s.number} />
+              ))
+            : ""}
         </div>
       )}
     </section>

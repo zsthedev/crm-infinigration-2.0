@@ -135,6 +135,7 @@ const AdminLeads = () => {
               <tr>
                 <th>Sr</th>
                 <th>Name</th>
+                <th>Phone</th>
                 <th>Program Selected</th>
                 <th>Created At</th>
                 <th>Campaign</th>
@@ -151,6 +152,7 @@ const AdminLeads = () => {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{l.client.name}</td>
+                      <td>{l.client.phone}</td>
                       <td>
                         {l.client.program
                           ? l.client.program.generalInformation[0].country

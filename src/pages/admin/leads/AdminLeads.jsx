@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import FilterLeads from "../../../componets/filter leads/FilterLeads";
+import React, { useState, useEffect } from "react";
+import FilterLeads from "../../../components/filter leads/FilterLeads";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import "./admin-leads.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import {
   assignLead,
   getAllLeads,
@@ -13,12 +12,12 @@ import {
 import Loader from "../../loader/Loader";
 import toast from "react-hot-toast";
 import { getEmployees } from "../../../redux/actions/admin";
-import FilteredLeads from "../../../componets/filter leads/FilteredLeads";
+// import FilteredLeads from "../../../components/filter leads/FilteredLeads";
 import { getProcess } from "../../../redux/actions/process";
 
 const AdminLeads = () => {
   const [isOpen, setOpen] = useState(false);
-  const [isFOpen, setFOpen] = useState(false);
+  const [activeAssignLeadId, setActiveAssignLeadId] = useState(null);
   const [forward, setForward] = useState("");
   const [status, setStatus] = useState("");
   const { employees } = useSelector((state) => state.admin);
@@ -39,7 +38,6 @@ const AdminLeads = () => {
       value: "requirements",
       label: "Requirements Gathering",
     },
-
     {
       value: "documents",
       label: "Documents Verification",
@@ -47,9 +45,9 @@ const AdminLeads = () => {
   ];
 
   useEffect(() => {
-    getEmployees();
+    dispatch(getEmployees());
     dispatch(getAllLeads());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -61,7 +59,7 @@ const AdminLeads = () => {
       toast.success(message);
       dispatch({ type: "clearMessage" });
     }
-  }, [error, message, loading]);
+  }, [error, message, loading, dispatch]);
 
   const forwardLeadOptions = employees
     ? employees
@@ -78,22 +76,20 @@ const AdminLeads = () => {
     e.preventDefault();
     const id = e.target.id;
     dispatch(updateLeadStatus(id, status.value.toString()));
-
-    console.log(id, status.value.toString());
   };
 
   const assignSubmitHandler = (e) => {
     e.preventDefault();
-
     dispatch(assignLead(e.target.id, forward.value));
   };
+
   const { process } = useSelector((state) => state.process);
 
   useEffect(() => {
     dispatch(getProcess());
-  }, []);
+  }, [dispatch]);
 
-  let processOptions =
+  const processOptions =
     process &&
     process[0] &&
     process[0].lead_process.map((p) => ({
@@ -114,15 +110,11 @@ const AdminLeads = () => {
         onDelayChange={(e) => setDelay(e.target.value)}
       />
 
-      {date != "" || employee != "" || delay != "" ? (
+      {date !== "" || employee !== "" || delay !== "" ? (
         <FilteredLeads date={date} delay={delay} employee={employee} />
       ) : (
         <>
           <div className={"actions-row"}>
-            {/* <div>
-              <input type="text" placeholder="Search by Name" />
-            </div> */}
-
             <div>
               <Link className="primary-btn" to={"add"}>
                 Add Leads
@@ -170,7 +162,13 @@ const AdminLeads = () => {
                           <Link to={`/admin/contracts/add/${l._id}`}>
                             Convert to Contract
                           </Link>
-                          <button onClick={() => setFOpen(!isFOpen)}>
+                          <button
+                            onClick={() =>
+                              setActiveAssignLeadId(
+                                activeAssignLeadId === l._id ? null : l._id
+                              )
+                            }
+                          >
                             Assign Lead
                           </button>
                         </div>
@@ -193,7 +191,9 @@ const AdminLeads = () => {
 
                         <form
                           onSubmit={assignSubmitHandler}
-                          style={{ display: isFOpen ? "" : "none" }}
+                          style={{
+                            display: activeAssignLeadId === l._id ? "" : "none",
+                          }}
                           id={l._id}
                         >
                           <Select

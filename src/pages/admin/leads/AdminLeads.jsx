@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import FilterLeads from "../../../components/filter leads/FilterLeads";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import "./admin-leads.scss";
@@ -12,7 +11,8 @@ import {
 import Loader from "../../loader/Loader";
 import toast from "react-hot-toast";
 import { getEmployees } from "../../../redux/actions/admin";
-// import FilteredLeads from "../../../components/filter leads/FilteredLeads";
+import FilterLeads from "../../../../src/componets/filter_leads/FilterLeads";
+
 import { getProcess } from "../../../redux/actions/process";
 
 const AdminLeads = () => {
@@ -127,7 +127,6 @@ const AdminLeads = () => {
               <tr>
                 <th>Sr</th>
                 <th>Name</th>
-                <th>Phone</th>
                 <th>Program Selected</th>
                 <th>Created At</th>
                 <th>Campaign</th>
@@ -144,7 +143,6 @@ const AdminLeads = () => {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{l.client.name}</td>
-                      <td>{l.client.phone}</td>
                       <td>
                         {l.client.program
                           ? l.client.program.generalInformation[0].country

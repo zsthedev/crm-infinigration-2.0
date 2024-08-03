@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import FilterLeads from "../../../componets/filter leads/FilterLeads";
 import AdminData from "../../../componets/admin data/AdminData";
 import "./admin-dashboard.scss";
-import FilteredLeads from "../../../componets/filter leads/FilteredLeads";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllLeads } from "../../../redux/actions/leads";
 import { getDashboardStats } from "../../../redux/actions/other";
+
+import FilteredLeads from "../../../componets/filter_leads/FilteredLeads";
+import FilterLeads from "../../../componets/filter_leads/FilterLeads";
 
 const AdminDashboard = () => {
   const [date, setDate] = useState("");

@@ -8,6 +8,7 @@ import Loader from "../../loader/Loader";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAllVendors } from "../../../redux/actions/vendor";
+import { getAllBanks } from "../../../redux/actions/bank";
 
 const CreateContract = () => {
   const [installments, setInstallments] = useState([
@@ -53,6 +54,7 @@ const CreateContract = () => {
 
   useEffect(() => {
     dispatch(getAllVendors());
+    dispatch(getAllBanks());
   }, []);
 
   const { vendors } = useSelector((state) => state.vendor);
@@ -81,22 +83,11 @@ const CreateContract = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    dispatch(
-      createContract(
-        lead.value,
-        program.value,
-        installments,
-        vendor.value,
-        vendorPercentage
-      )
-    );
+    // console.log(lead.value, program.value, installments, bank.value);
+    // console.log("Bank:", bank.value);
 
-    console.log(
-      lead.value,
-      program.value,
-      installments,
-      vendor.value,
-      vendorPercentage
+    dispatch(
+      createContract(lead.value, bank.value, program.value, installments)
     );
   };
 
@@ -143,12 +134,29 @@ const CreateContract = () => {
     }
   }, [error, message, dispatch, navigate]);
 
-  return loading ? (
+  let { banks } = useSelector((state) => state.bank);
+  let bankOptions =
+    banks && banks.length > 0
+      ? banks.map((b) => ({
+          value: b._id,
+          label: `${b.title}-${b.accNo}`,
+        }))
+      : [];
+
+  const [bank, setBank] = useState("");
+  return loading || !banks ? (
     <Loader />
   ) : (
     <section className="section" id="create-contract">
       <form action="" onSubmit={submitHandler}>
         <h2 className="heading">Create Contract</h2>
+        <Select
+          placeholder="Choose Bank"
+          options={bankOptions}
+          value={bank}
+          defaultInputValue={bank}
+          onChange={setBank}
+        ></Select>
         <Select
           placeholder="Choose Lead"
           options={leadOptions}

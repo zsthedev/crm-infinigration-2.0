@@ -2,8 +2,7 @@ import axios from "axios";
 import { server } from "../store";
 
 export const createContract =
-  (lead, program, installements, vendor, vendorPercentage) =>
-  async (dispatch) => {
+  (lead, bank, program, installements) => async (dispatch) => {
     dispatch({ type: "createContractRequest" });
 
     try {
@@ -11,10 +10,9 @@ export const createContract =
         `${server}/create_contract`,
         {
           lead,
+          bank,
           program,
           installements,
-          vendor,
-          vendorPercentage,
         },
         {
           headers: { "Content-Type": "application/json" },

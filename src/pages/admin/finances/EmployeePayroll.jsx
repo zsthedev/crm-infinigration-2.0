@@ -10,7 +10,7 @@ const EmployeePayroll = () => {
             <th>Employee</th>
             <th>Basic Salary</th>
             <th>Clients Closed</th>
-            <th>Bonus</th>
+            <th>Commisson</th>
             <th>Deduction</th>
             <th>Status</th>
             <th>Actions</th>
